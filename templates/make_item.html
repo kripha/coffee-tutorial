@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<script>
+    let item = {{item|tojson}}
+</script>
+
+<div> Drag and drop ingredients to make a cup of {{item["name"]}}</div>
+<div class="row">
+    <div class="col-1">
+
+    </div>
+
+    <div class="home_container col-4">
+        <!-- TODO: make into draggable objects -->
+        {% for x in all_ingredients %}
+        <div>{{x}}</div>
+        {% endfor %}
+    </div>
+
+    <div class="col-1">
+
+    </div>
+
+    <div class="home_container col-4">
+        Drag Here
+        <!-- TODO: make into droppable object -->
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-8">
+
+    </div>
+
+    <div class="home_container col-1">
+        <button>Submit</button>
+        <!-- TODO: check correctness and give feedback -->
+    </div>
+    <!-- TODO: add next button when submission is correct -->
+</div>
+
+{% endblock %}
