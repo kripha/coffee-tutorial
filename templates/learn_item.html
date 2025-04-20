@@ -2,15 +2,19 @@
 
 {% block content %}
 
+<script>
+    let item = {{item|tojson}}
+</script>
+
 <div class="row">
     <div class="col-1">
 
     </div>
 
     <div class="home_container col-4">
-        Espresso
+        {{item['name']}}
         <br>
-        <img src="../static/images/espresso.png">
+        <img src="{{item['img']}}">
     </div>
 
     <div class="col-1">
@@ -20,16 +24,19 @@
     <div class="home_container col-4">
         Ingredients
         <ul>
-            <li>1 part espresso</li>
+            {% for x in item["ingredients"] %}
+                <li>{{x}}</li>
+            {% endfor %}
         </ul>
         Taste Profile
         <ul>
-            <li>Bitter</li>
+            <li>{{item["taste_profile"]}}</li>
         </ul>
         Similar Drinks
         <ul>
-            <li>Macchiato</li>
-            <li>Americano</li>
+            {% for x in item["similar_drinks"] %}
+                <li>{{x}}</li>
+            {% endfor %}
         </ul>
     </div>
 
