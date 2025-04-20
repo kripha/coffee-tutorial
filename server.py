@@ -54,6 +54,9 @@ drinks = [
     }
 ]
 
+all_ingredients = ["1 part espresso", "2 parts espresso", "A splash of steamed milk", "1 part steamed milk",  
+                "2 parts steamed milk", "A thin layer of foamed milk", "1 part foamed milk", "2 parts water"]
+
 @app.route('/')
 def home():
     return render_template('home.html')
@@ -64,7 +67,7 @@ def learn(id):
 
 @app.route('/make/<id>')
 def make(id):
-    return render_template('make_item.html', item = drinks[int(id)-1])
+    return render_template('make_item.html', all_ingredients = all_ingredients, item = drinks[int(id)-1])
 
 if __name__ == '__main__':
     app.run(debug = True, port=5001)
