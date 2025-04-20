@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+    <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="data:,">
+
+<!-- jquery -->
+    <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" 
+    crossorigin="anonymous"/>
+
+
+    <!-- <script type="text/javascript" src="{{ url_for('static', filename = 'main.js') }}"></script> -->
+
+    <title>COFFEE TUTORIAL</title>
+    <style>
+        .navbar {
+            background-color: lightgray;
+        }
+    </style>
+
+    </head>
+    <body>
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container">
+            <!-- Website Name -->
+            <a class="navbar-brand" href="/">HOME</a>
+            
+            <!-- TODO: nav-links disappear when screen is small  -->
+
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="nav-link active" href="#">Jump To</a>
+                    <!-- TODO: do we want recipe/cheatsheet?  -->
+                    <a class="nav-link active" href="#">Recipes</a>
+                    <a class="nav-link active" href="#">Quiz</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+        <div id="layout_container">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </body>
+</html>
