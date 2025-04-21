@@ -8,6 +8,7 @@ drinks = [
     "name": "Espresso",
     "img": "../static/images/espresso.png",
     "ingredients": ["1 part espresso"],
+    "backend_ingredients": ["1 part espresso"],
     "taste_profile": "Bitter",
     "similar_drinks": ["Macchiato", "Americano"]
     },
@@ -17,6 +18,7 @@ drinks = [
     "img": "../static/images/latte.png",
     # TODO: should it be 2 parts of 1 part, 1 part?
     "ingredients": ["1 part espresso", "2 parts steamed milk", "A thin layer of foamed milk"],
+    "backend_ingredients": ["1 part espresso", "1 part steamed milk", "1 part steamed milk", "A thin layer of foamed milk"],
     "taste_profile": "Milky",
     "similar_drinks": ["Flat White", "Cappuccino"]
     },
@@ -25,6 +27,7 @@ drinks = [
     "name": "Cappuccino",
     "img": "../static/images/cappuccino.png",
     "ingredients": ["1 part espresso", "1 part steamed milk", "1 part foamed milk"],
+    "backend_ingredients": ["1 part espresso", "1 part steamed milk", "1 part foamed milk"],
     "taste_profile": "Milky",
     "similar_drinks": ["Flat White", "Latte"]
     },
@@ -33,6 +36,7 @@ drinks = [
     "name": "Americano",
     "img": "../static/images/americano.png",
     "ingredients": ["1 part espresso", "2 parts water"],
+    "backend_ingredients": ["1 part espresso", "1 part water", "1 part water"],
     "taste_profile": "Bitter",
     "similar_drinks": ["Espresso", "Macchiato"]
     },
@@ -41,6 +45,7 @@ drinks = [
     "name": "Flat White",
     "img": "../static/images/flat_white.png",
     "ingredients": ["1 part espresso", "2 parts steamed milk"],
+    "backend_ingredients": ["1 part espresso", "1 part steamed milk", "1 part steamed milk"],
     "taste_profile": "Milky",
     "similar_drinks": ["Latte", "Cappuccino"]
     },
@@ -49,13 +54,17 @@ drinks = [
     "name": "Macchiato",
     "img": "../static/images/macchiato.png",
     "ingredients": ["2 parts espresso", "A splash of steamed milk"],
+    "backend_ingredients": ["1 part espresso", "1 part espresso", "A splash of steamed milk"],
     "taste_profile": "Bitter",
     "similar_drinks": ["Espresso", "Americano"]
     }
 ]
 
-all_ingredients = ["1 part espresso", "2 parts espresso", "A splash of steamed milk", "1 part steamed milk",  
-                "2 parts steamed milk", "A thin layer of foamed milk", "1 part foamed milk", "2 parts water"]
+# all_ingredients = ["1 part espresso", "2 parts espresso", "A splash of steamed milk", "1 part steamed milk",  
+#                 "2 parts steamed milk", "A thin layer of foamed milk", "1 part foamed milk", "2 parts water"]
+
+all_ingredients = ["1 part espresso", "A splash of steamed milk", "1 part steamed milk",  
+                 "A thin layer of foamed milk", "1 part foamed milk", "1 part water"]
 
 @app.route('/')
 def home():
