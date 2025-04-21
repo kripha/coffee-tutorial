@@ -9,12 +9,9 @@
     <div class="home_container col-4">
         Drinks to Learn
         <ul>
-            <li>Espresso</li>
-            <li>Latte</li>
-            <li>Cappuccino</li>
-            <li>Americano</li>
-            <li>Flat White</li>
-            <li>Macchiato</li>
+            {% for drink in drinks %} 
+                <a href="/learn/{{drink.id}}"><li>{{drink.name}}</li></a>
+            {% endfor %}
         </ul>
     </div>
     <div class="col-1">

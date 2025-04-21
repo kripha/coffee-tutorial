@@ -16,8 +16,15 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" 
     crossorigin="anonymous"/>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- TODO: I had to add this to get dropdown working, that's okay right?-->
+
 
     <!-- <script type="text/javascript" src="{{ url_for('static', filename = 'main.js') }}"></script> -->
+    <script>
+        let drinks = {{drinks|tojson}}
+    </script>
+    <script src="{{ url_for('static', filename='layout.js') }}"></script>
 
     <title>COFFEE TUTORIAL</title>
     <style>
@@ -43,8 +50,31 @@
 
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
+                    <div class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="jumpToDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Jump To
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="jumpToDropdown">
+                            {% for drink in drinks %} 
+                                <a class="dropdown-item" href="/learn/{{drink.id}}"><li>{{drink.name}}</li></a>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="recipeDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          Recipes
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="recipeDropdown">
+                          {% for drink in drinks %}
+                            <li>
+                                <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#recipeModal" data-drink-id="{{ drink.id }}" data-drink-name="{{ drink.name }}" data-drink-recipe='{{ drink.ingredients|tojson }}'>
+                                    View Recipe for {{ drink.name }}
+                                  </a>
+                            </li>
+                          {% endfor %}
+                        </ul>
+                      </div>
                     <!-- TODO: attach link to each navbar object -->
-                    <a class="nav-link active" href="#">Jump To</a>
                     <!-- TODO: do we want recipe/cheatsheet?  -->
                     <a class="nav-link active" href="#">Recipes</a>
                     <a class="nav-link active" href="#">Quiz</a>
@@ -52,6 +82,19 @@
             </div>
         </div>
     </nav>
+    <div class="modal fade" id="recipeModal" tabindex="-1" aria-labelledby="recipeModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="recipeModalLabel">Recipe</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p id="recipeContent">Loading...</p>
+            </div>
+          </div>
+        </div>
+      </div>
         <div id="layout_container">
             {% block content %}
             {% endblock %}

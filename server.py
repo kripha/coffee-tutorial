@@ -59,15 +59,19 @@ all_ingredients = ["1 part espresso", "2 parts espresso", "A splash of steamed m
 
 @app.route('/')
 def home():
-    return render_template('home.html')
+    return render_template('home.html',drinks=drinks)
 
 @app.route('/learn/<id>')
 def learn(id):
-    return render_template('learn_item.html', item = drinks[int(id)-1])
+    return render_template('learn_item.html', item = drinks[int(id)])
 
 @app.route('/make/<id>')
 def make(id):
-    return render_template('make_item.html', all_ingredients = all_ingredients, item = drinks[int(id)-1])
+    return render_template('make_item.html', all_ingredients = all_ingredients, item = drinks[int(id)])
+
+@app.context_processor
+def inject_drinks():
+    return dict(drinks=drinks)
 
 if __name__ == '__main__':
     app.run(debug = True, port=5001)
