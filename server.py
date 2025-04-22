@@ -79,7 +79,7 @@ def learn(id):
 
 @app.route('/make/<id>')
 def make(id):
-    return render_template('make_item.html', all_ingredients = all_ingredients, item = drinks[int(id)])
+    return render_template('make_item.html', all_ingredients = all_ingredients, all_drinks = drinks, item = drinks[int(id)])
 
 @app.context_processor
 def inject_drinks():

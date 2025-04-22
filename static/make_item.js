@@ -86,6 +86,7 @@ function display_all_ingredients(){
 }
 
 function reset_ingredients(){
+    $("#resultdiv").html("")
     $.ajax({
         type: "GET",
         url: "reset_ingredients",
@@ -119,10 +120,30 @@ function submit_ingredients(ingredients){
             reset_ingredients();
             let res = result["res"]
             if(res == "Correct"){
-                alert("Correct! Proceed to the next page.");
+                $("#resultdiv").html("Correct! Proceed to the next page.<br>")
+                var button = $('<button/>', {
+                    text: 'Next Page', 
+                    id: 'myButton', 
+                    class: 'my-button-class', 
+                    click: function() { 
+                        if(item["id"] == all_drinks.length - 1){
+                            let url = "/quiz"
+                            window.location.href = url;
+                        } else{
+                            let next_id = parseInt(item["id"], 10) + 1;
+                            let next_string = next_id.toString();
+                            let url = "/learn/" + next_string
+                            window.location.href = url;
+                        }
+                    }
+                  });
+                  $('#resultdiv').append(button);
+                  if(item["id"] == all_drinks.length - 1){
+                    $("#myButton").text("Take Quiz");
+                  }
             }
             else{
-                alert("Incorrect! Try again!");
+                $("#resultdiv").html("Incorrect! Try again!")
             }
         },
         error: function(request, status, error){

@@ -11,6 +11,7 @@
 <script>
     let item = {{item|tojson}}
     let all_ingredients = {{all_ingredients|tojson}}
+    let all_drinks = {{all_drinks|tojson}}
 </script>
 
 <script src="{{ url_for('static', filename='make_item.js') }}"></script>
@@ -36,6 +37,8 @@
         <!-- TODO: make into droppable object -->
     </div>
 </div>
+
+<div id="resultdiv"></div>
 
 <div class="row">
     <div class="home_container col-1">
