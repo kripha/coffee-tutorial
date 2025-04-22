@@ -8,6 +8,7 @@ drinks = [
     {
         "id": 0,
         "name": "Espresso",
+        "price": 4,
         "img": "../static/images/espresso.png",
         "ingredients": ["1 part espresso"],
         "backend_ingredients": ["1 part espresso"],
@@ -25,6 +26,7 @@ drinks = [
     {
         "id": 1,
         "name": "Latte",
+        "price": 12,
         "img": "../static/images/latte.png",
         # TODO: should it be 2 parts of 1 part, 1 part?
         "ingredients": ["1 part espresso", "2 parts steamed milk", "A thin layer of foamed milk"],
@@ -53,6 +55,7 @@ drinks = [
     {
         "id": 2,
         "name": "Cappuccino",
+        "price": 12,
         "img": "../static/images/cappuccino.png",
         "ingredients": ["1 part espresso", "1 part steamed milk", "1 part foamed milk"],
         "backend_ingredients": ["1 part espresso", "1 part steamed milk", "1 part foamed milk"],
@@ -80,6 +83,7 @@ drinks = [
     {
         "id": 3,
         "name": "Americano",
+        "price": 8,
         "img": "../static/images/americano.png",
         "ingredients": ["1 part espresso", "2 parts water"],
         "backend_ingredients": ["1 part espresso", "1 part water", "1 part water"],
@@ -102,6 +106,7 @@ drinks = [
     {
         "id": 4,
         "name": "Flat White",
+        "price": 8,
         "img": "../static/images/flat_white.png",
         "ingredients": ["1 part espresso", "2 parts steamed milk"],
         "backend_ingredients": ["1 part espresso", "1 part steamed milk", "1 part steamed milk"],
@@ -124,6 +129,7 @@ drinks = [
     {
         "id": 5,
         "name": "Macchiato",
+        "price": 8,
         "img": "../static/images/macchiato.png",
         "ingredients": ["2 parts espresso", "A splash of steamed milk"],
         "backend_ingredients": ["1 part espresso", "1 part espresso", "A splash of steamed milk"],
@@ -163,6 +169,11 @@ def learn(id):
 @app.route('/make/<id>')
 def make(id):
     return render_template('make_item.html', all_ingredients = all_ingredients, curr_ingredients = curr_ingredients, all_drinks = drinks, item = drinks[int(id)])
+
+@app.route('/quiz/<id>')
+def quiz(id):
+    # TODO: Add a quiz_item page
+    return render_template('quiz_item.html', all_drinks = drinks, item = drinks[int(id)])
 
 @app.context_processor
 def inject_drinks():
@@ -214,6 +225,23 @@ def submit_ingredients():
     
 
     return jsonify(all_ingredients=all_ingredients, curr_ingredients=curr_ingredients, res=res)
+
+@app.route('/quiz/deliver', methods=['GET', 'POST'])
+def deliver():
+    global all_ingredients
+
+    json_data = request.get_json()
+
+    submitted_ingredients = json_data["ingredients"]
+    index = int(json_data["id"])
+    correct_ingredients = drinks[index]["ingredients_map"]
+    res = "Incorrect"
+    if Counter(correct_ingredients) == Counter(submitted_ingredients):
+        res = "Correct"
+    else:
+        res = "Incorrect"
+
+    return jsonify(res=res)
 
 if __name__ == '__main__':
     app.run(debug = True, port=5001)
