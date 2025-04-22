@@ -1,3 +1,7 @@
+$(document).ready(function(){
+    display_all_ingredients();
+})
+
 $(function() {
     $( ".draggable" ).draggable({
         revert: "invalid"
@@ -17,13 +21,13 @@ $(function() {
             $(this).css('background-color', 'lightblue');
             let droppedEvent = ui.helper[0].innerText;
             addIngredient(droppedEvent);
+            display_all_ingredients();
         }
       });
 
 
       $('#resetButton').click(function() {
         reset_ingredients();
-        // Code to be executed when the button is clicked
       });
   } );
 
@@ -61,6 +65,19 @@ function display_ingredients(ingredients){
             $("#drop-container").append("<br>");
         }
     }
+}
+
+function display_all_ingredients(){
+    $("#drag-container").html("");
+    for(let i = 0; i < all_ingredients.length; i++){
+        $("#drag-container").append("<div class='draggable' id='ingred-" + i + "'>" + all_ingredients[i] + "</div>");
+    }
+    $(".draggable").draggable({
+        revert: "invalid"
+    });
+    $(".draggable").hover(function(){
+        $(this).css('cursor','move');
+    });
 }
 
 function reset_ingredients(){
