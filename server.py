@@ -121,12 +121,11 @@ def submit_ingredients():
     json_data = request.get_json()   
     
     submitted_ingredients = json_data["curr_ingredients"] 
-    index = json_data["id"]
-    correct_ingredients = drinks[5]["backend_ingredients"]
+    index = int(json_data["id"])
+    correct_ingredients = drinks[index]["backend_ingredients"]
     res = "Incorrect"
     if Counter(correct_ingredients) == Counter(submitted_ingredients):
         res = "Correct"
-        print("correct in python")
     else:
         res = "Incorrect"
     
