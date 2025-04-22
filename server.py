@@ -5,59 +5,142 @@ from collections import Counter
 app = Flask(__name__)
 
 drinks = [
-    { "id": 0,
-    "name": "Espresso",
-    "img": "../static/images/espresso.png",
-    "ingredients": ["1 part espresso"],
-    "backend_ingredients": ["1 part espresso"],
-    "taste_profile": "Bitter",
-    "similar_drinks": ["Macchiato", "Americano"]
+    {
+        "id": 0,
+        "name": "Espresso",
+        "img": "../static/images/espresso.png",
+        "ingredients": ["1 part espresso"],
+        "backend_ingredients": ["1 part espresso"],
+        "ingredients_map" : [
+            {
+                "name": "espresso",
+                "count": 1,
+                "unit": "part"
+            },
+        ],
+        "taste_profile": "Bitter",
+        "similar_drinks": ["Macchiato", "Americano"]
     },
     
-    { "id": 1,
-    "name": "Latte",
-    "img": "../static/images/latte.png",
-    # TODO: should it be 2 parts of 1 part, 1 part?
-    "ingredients": ["1 part espresso", "2 parts steamed milk", "A thin layer of foamed milk"],
-    "backend_ingredients": ["1 part espresso", "1 part steamed milk", "1 part steamed milk", "A thin layer of foamed milk"],
-    "taste_profile": "Milky",
-    "similar_drinks": ["Flat White", "Cappuccino"]
+    {
+        "id": 1,
+        "name": "Latte",
+        "img": "../static/images/latte.png",
+        # TODO: should it be 2 parts of 1 part, 1 part?
+        "ingredients": ["1 part espresso", "2 parts steamed milk", "A thin layer of foamed milk"],
+        "backend_ingredients": ["1 part espresso", "1 part steamed milk", "1 part steamed milk", "A thin layer of foamed milk"],
+        "ingredients_map" : [
+            {
+                "name": "espresso",
+                "count": 1,
+                "unit": "part"
+            },
+            {
+                "name": "steamed milk",
+                "count": 2,
+                "unit": "part"
+            },
+            {
+                "name": "foamed milk",
+                "count": 1,
+                "unit": "thin layer"
+            },
+        ],
+        "taste_profile": "Milky",
+        "similar_drinks": ["Flat White", "Cappuccino"]
     },
     
-    { "id": 2,
-    "name": "Cappuccino",
-    "img": "../static/images/cappuccino.png",
-    "ingredients": ["1 part espresso", "1 part steamed milk", "1 part foamed milk"],
-    "backend_ingredients": ["1 part espresso", "1 part steamed milk", "1 part foamed milk"],
-    "taste_profile": "Milky",
-    "similar_drinks": ["Flat White", "Latte"]
+    {
+        "id": 2,
+        "name": "Cappuccino",
+        "img": "../static/images/cappuccino.png",
+        "ingredients": ["1 part espresso", "1 part steamed milk", "1 part foamed milk"],
+        "backend_ingredients": ["1 part espresso", "1 part steamed milk", "1 part foamed milk"],
+        "ingredients_map" : [
+            {
+                "name": "espresso",
+                "count": 1,
+                "unit": "part"
+            },
+            {
+                "name": "steamed milk",
+                "count": 1,
+                "unit": "part"
+            },
+            {
+                "name": "foamed milk",
+                "count": 1,
+                "unit": "part"
+            },
+        ],
+        "taste_profile": "Milky",
+        "similar_drinks": ["Flat White", "Latte"]
     },
 
-    { "id": 3,
-    "name": "Americano",
-    "img": "../static/images/americano.png",
-    "ingredients": ["1 part espresso", "2 parts water"],
-    "backend_ingredients": ["1 part espresso", "1 part water", "1 part water"],
-    "taste_profile": "Bitter",
-    "similar_drinks": ["Espresso", "Macchiato"]
+    {
+        "id": 3,
+        "name": "Americano",
+        "img": "../static/images/americano.png",
+        "ingredients": ["1 part espresso", "2 parts water"],
+        "backend_ingredients": ["1 part espresso", "1 part water", "1 part water"],
+        "ingredients_map" : [
+            {
+                "name": "espresso",
+                "count": 1,
+                "unit": "part"
+            },
+            {
+                "name": "water",
+                "count": 2,
+                "unit": "part"
+            }
+        ],
+        "taste_profile": "Bitter",
+        "similar_drinks": ["Espresso", "Macchiato"]
     },
 
-    { "id": 4,
-    "name": "Flat White",
-    "img": "../static/images/flat_white.png",
-    "ingredients": ["1 part espresso", "2 parts steamed milk"],
-    "backend_ingredients": ["1 part espresso", "1 part steamed milk", "1 part steamed milk"],
-    "taste_profile": "Milky",
-    "similar_drinks": ["Latte", "Cappuccino"]
+    {
+        "id": 4,
+        "name": "Flat White",
+        "img": "../static/images/flat_white.png",
+        "ingredients": ["1 part espresso", "2 parts steamed milk"],
+        "backend_ingredients": ["1 part espresso", "1 part steamed milk", "1 part steamed milk"],
+        "ingredients_map" : [
+            {
+                "name": "espresso",
+                "count": 1,
+                "unit": "part"
+            },
+            {
+                "name": "steamed milk",
+                "count": 2,
+                "unit": "part"
+            }
+        ],
+        "taste_profile": "Milky",
+        "similar_drinks": ["Latte", "Cappuccino"]
     },
 
-    { "id": 5,
-    "name": "Macchiato",
-    "img": "../static/images/macchiato.png",
-    "ingredients": ["2 parts espresso", "A splash of steamed milk"],
-    "backend_ingredients": ["1 part espresso", "1 part espresso", "A splash of steamed milk"],
-    "taste_profile": "Bitter",
-    "similar_drinks": ["Espresso", "Americano"]
+    {
+        "id": 5,
+        "name": "Macchiato",
+        "img": "../static/images/macchiato.png",
+        "ingredients": ["2 parts espresso", "A splash of steamed milk"],
+        "backend_ingredients": ["1 part espresso", "1 part espresso", "A splash of steamed milk"],
+        "ingredients_map" : [
+            {
+                "name": "espresso",
+                "count": 2,
+                "unit": "part"
+            },
+            {
+                "name": "steamed milk",
+                "count": 1,
+                "unit": "splash"
+            }
+        ],
+        "taste_profile": "Bitter",
+        "similar_drinks": ["Espresso", "Americano"]
     }
 ]
 
