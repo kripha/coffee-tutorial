@@ -1,6 +1,7 @@
 from flask import Flask
 from flask import render_template
 from flask import Response, request, jsonify
+from collections import Counter
 app = Flask(__name__)
 
 drinks = [
@@ -104,6 +105,33 @@ def reset_ingredients():
 
     curr_ingredients = []
     return jsonify(all_ingredients=all_ingredients, curr_ingredients=curr_ingredients)
+
+@app.route('/make/get_curr_ingredients', methods=['GET', 'POST'])
+def get_curr_ingredients():
+    global all_ingredients
+    global curr_ingredients
+
+    return jsonify(all_ingredients=all_ingredients, curr_ingredients=curr_ingredients)
+
+@app.route('/make/submit_ingredients', methods=['GET', 'POST'])
+def submit_ingredients():
+    global all_ingredients
+    global curr_ingredients
+
+    json_data = request.get_json()   
+    
+    submitted_ingredients = json_data["curr_ingredients"] 
+    index = json_data["id"]
+    correct_ingredients = drinks[5]["backend_ingredients"]
+    res = "Incorrect"
+    if Counter(correct_ingredients) == Counter(submitted_ingredients):
+        res = "Correct"
+        print("correct in python")
+    else:
+        res = "Incorrect"
+    
+
+    return jsonify(all_ingredients=all_ingredients, curr_ingredients=curr_ingredients, res=res)
 
 if __name__ == '__main__':
     app.run(debug = True, port=5001)

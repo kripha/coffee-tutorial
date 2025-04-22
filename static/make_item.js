@@ -29,6 +29,11 @@ $(function() {
       $('#resetButton').click(function() {
         reset_ingredients();
       });
+
+      $('#submitButton').click(function() {
+        let curr_ingredients = get_curr_ingredients();
+        submit_ingredients(curr_ingredients);
+      });
   } );
 
 function addIngredient(ingredient){
@@ -98,6 +103,55 @@ function reset_ingredients(){
             console.log(error)
         }
     })
+}
+
+function submit_ingredients(ingredients){
+    let path = window.location.pathname;  // e.g., "/make/123"
+    let id = path.split('/').pop();       // "123"
+    let data_to_save = {"curr_ingredients": ingredients, "id": id}
+    $.ajax({
+        type: "POST",
+        url: "submit_ingredients",
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        data : JSON.stringify(data_to_save),
+        success: function(result){
+            reset_ingredients();
+            let res = result["res"]
+            if(res == "Correct"){
+                alert("Correct! Proceed to the next page.");
+            }
+            else{
+                alert("Incorrect! Try again!");
+            }
+        },
+        error: function(request, status, error){
+            console.log("Error saving ingredient");
+            console.log(request)
+            console.log(status)
+            console.log(error)
+        }
+    })
+}
+
+function get_curr_ingredients(){
+    $.ajax({
+        type: "GET",
+        url: "get_curr_ingredients",
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: function(result){
+            let curr_ingreds = result["curr_ingredients"]
+            ingredients = curr_ingreds
+        },
+        error: function(request, status, error){
+            console.log("Error resetting ingredients");
+            console.log(request)
+            console.log(status)
+            console.log(error)
+        }
+    })
+    return ingredients;
 }
 
   
