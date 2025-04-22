@@ -4,7 +4,6 @@
 
 <title>jQuery UI Droppable - Default functionality</title>
   <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css">
-  <link rel="stylesheet" href="/resources/demos/style.css">
 
   <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
   <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
@@ -23,22 +22,26 @@
 
     <div class="home_container col-4">
         <!-- TODO: make into draggable objects -->
-        {% for x in all_ingredients %}
-        <div class = "draggable" id="{{item.name}}">{{x}}</div>
+        {% for ingredient in all_ingredients %}
+            <div class="draggable" id="ingredient-{{loop.index0}}">{{ ingredient }}</div>
         {% endfor %}
+
     </div>
 
     <div class="col-1">
 
     </div>
 
-    <div class="home_container col-4 droppable">
+    <div class="home_container col-4 droppable" id ="drop-container">
         Drag Here
         <!-- TODO: make into droppable object -->
     </div>
 </div>
 
 <div class="row">
+    <div class="home_container col-1">
+        <button id="resetButton">Reset</button>
+    </div>
     <div class="col-8">
 
     </div>

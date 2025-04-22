@@ -66,6 +66,8 @@ drinks = [
 all_ingredients = ["1 part espresso", "A splash of steamed milk", "1 part steamed milk",  
                  "A thin layer of foamed milk", "1 part foamed milk", "1 part water"]
 
+curr_ingredients = []
+
 @app.route('/')
 def home():
     return render_template('home.html',drinks=drinks)
@@ -81,6 +83,27 @@ def make(id):
 @app.context_processor
 def inject_drinks():
     return dict(drinks=drinks)
+
+@app.route('/make/save_ingredient', methods=['GET', 'POST'])
+def save_ingredient():
+    global all_ingredients
+    global curr_ingredients
+    
+
+    json_data = request.get_json()   
+    
+    new_ingredient = json_data["ingredient"] 
+    
+    curr_ingredients.append(new_ingredient)
+    return jsonify(all_ingredients=all_ingredients, curr_ingredients=curr_ingredients)
+
+@app.route('/make/reset_ingredients', methods=['GET', 'POST'])
+def reset_ingredients():
+    global all_ingredients
+    global curr_ingredients
+
+    curr_ingredients = []
+    return jsonify(all_ingredients=all_ingredients, curr_ingredients=curr_ingredients)
 
 if __name__ == '__main__':
     app.run(debug = True, port=5001)
