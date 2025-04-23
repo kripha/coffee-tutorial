@@ -158,6 +158,9 @@ all_ingredients = ["1 part espresso", "A splash of steamed milk", "1 part steame
 
 curr_ingredients = []
 
+def normalize_ingredient_list(ingredients):
+    return sorted(ingredients, key=lambda x: (x['name'], x['unit'], x['count']))
+
 @app.route('/')
 def home():
     return render_template('home.html',drinks=drinks)
@@ -235,11 +238,9 @@ def deliver():
     submitted_ingredients = json_data["ingredients"]
     index = int(json_data["id"])
     correct_ingredients = drinks[index]["ingredients_map"]
-    res = "Incorrect"
-    if Counter(correct_ingredients) == Counter(submitted_ingredients):
-        res = "Correct"
-    else:
-        res = "Incorrect"
+    normalized_submitted = normalize_ingredient_list(submitted_ingredients)
+    normalized_correct = normalize_ingredient_list(correct_ingredients)
+    res = normalized_submitted == normalized_correct
 
     return jsonify(res=res)
 
