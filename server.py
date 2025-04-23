@@ -2,6 +2,7 @@ from flask import Flask
 from flask import render_template
 from flask import Response, request, jsonify
 from collections import Counter
+import random
 app = Flask(__name__)
 
 drinks = [
@@ -173,10 +174,9 @@ def learn(id):
 def make(id):
     return render_template('make_item.html', all_ingredients = all_ingredients, curr_ingredients = curr_ingredients, all_drinks = drinks, item = drinks[int(id)])
 
-@app.route('/quiz/<id>')
-def quiz(id):
-    # TODO: Add a quiz_item page
-    return render_template('quiz_item.html', all_drinks = drinks, item = drinks[int(id)])
+@app.route('/quiz')
+def quiz():
+    return render_template('quiz_item.html', all_drinks=drinks)
 
 @app.context_processor
 def inject_drinks():
@@ -229,19 +229,33 @@ def submit_ingredients():
 
     return jsonify(all_ingredients=all_ingredients, curr_ingredients=curr_ingredients, res=res)
 
-@app.route('/quiz/deliver', methods=['GET', 'POST'])
+
+@app.route('/quiz/deliver', methods=['POST'])
 def deliver():
-    global all_ingredients
-
     json_data = request.get_json()
-
     submitted_ingredients = json_data["ingredients"]
     index = int(json_data["id"])
-    correct_ingredients = drinks[index]["ingredients_map"]
-    normalized_submitted = normalize_ingredient_list(submitted_ingredients)
-    normalized_correct = normalize_ingredient_list(correct_ingredients)
-    res = normalized_submitted == normalized_correct
 
+    correct_ingredients = drinks[index]["ingredients_map"]
+
+    # Flatten the correct ingredients into a list of strings
+    correct_list = []
+    for item in correct_ingredients:
+        name = item["name"]
+        count = item["count"]
+        unit = item["unit"]
+
+        if unit in ["splash", "thin layer"]:
+            correct_list.append(f"A {unit} of {name}")
+        else:
+            for _ in range(count):
+                correct_list.append(name.capitalize())
+
+    print("Correct ingredients:", correct_list)
+    print("Submitted ingredients:", submitted_ingredients)
+
+    # Compare ingredients using Counter to allow unordered matches
+    res = Counter(submitted_ingredients) == Counter(correct_list)
     return jsonify(res=res)
 
 if __name__ == '__main__':

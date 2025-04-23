@@ -1,0 +1,98 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<style>
+  .container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-top: 50px;
+  }
+
+  .cup {
+    width: 100px;
+    height: 120px;
+    margin: 20px;
+    text-align: center;
+    border: 1px solid #333;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    background-color: #f0f0f0;
+    cursor: move;
+  }
+
+  .milk { background-color: #f3f3f3; }
+  .cream { background-color: #fff; }
+  .espresso { background-color: #6f4e37; color: white; }
+  .water { background-color: #add8e6; }
+
+  .main-cup {
+    width: 140px;
+    height: 180px;
+    background-color: #e0e0e0;
+    border: 2px dashed #444;
+    margin: 20px;
+    padding: 5px;
+    text-align: center;
+  }
+</style>
+
+<h2 id="quiz-title">Coffee Quiz</h2>
+
+<div class="container" style="justify-content: left;">
+    <div id="speech-bubble" style="
+      background: #fff;
+      border: 2px solid #333;
+      border-radius: 10px;
+      padding: 15px 20px;
+      max-width: 300px;
+      font-weight: bold;
+      text-align: center;
+      position: relative;
+      box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+    ">
+      Make a drink!
+    </div>
+  </div>
+
+<div class="container">
+  <div class="cup cream draggable" data-ingredient="Cream">Cream</div>
+
+  <div id="milk-cup-container">
+    <select id="milk-type" class="form-select mb-1">
+      <option value="milk">Milk</option>
+      <option value="steamed milk">Steamed Milk</option>
+      <option value="foamed milk">Foamed Milk</option>
+    </select>
+  
+    <select id="milk-unit" class="form-select mb-2">
+      <option value="part">Part</option>
+      <option value="splash">Splash</option>
+      <option value="thin layer">Thin Layer</option>
+    </select>
+  
+    <div class="cup milk draggable" data-ingredient="Milk" id="milk-cup">Milk</div>
+  </div>
+
+  <div class="main-cup droppable" id="main-cup">
+    <p>Drop Here</p>
+  </div>
+
+  <div class="cup water draggable" data-ingredient="Water">Water</div>
+  <div class="cup espresso draggable" data-ingredient="Espresso">Espresso</div>
+
+  <div class="container" style="justify-content: center; gap: 20px;">
+    <button id="dump-button" class="btn btn-secondary">Dump</button>
+    <button id="submit-button" class="btn btn-primary">Submit</button>
+  </div>
+</div>
+
+<script>
+    window.quizData = {{ all_drinks | tojson }};
+</script>
+<script src="{{ url_for('static', filename='quiz_item.js') }}"></script>
+
+{% endblock %}
