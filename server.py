@@ -10,7 +10,7 @@ drinks = [
         "id": 0,
         "name": "Espresso",
         "price": 4,
-        "img": "../static/images/espresso.png",
+        "img": "../static/images/espresso.jpg",
         "ingredients": ["1 part espresso"],
         "backend_ingredients": ["1 part espresso"],
         "ingredients_map" : [
@@ -28,7 +28,7 @@ drinks = [
         "id": 1,
         "name": "Latte",
         "price": 12,
-        "img": "../static/images/latte.png",
+        "img": "../static/images/latte.jpg",
         # TODO: should it be 2 parts of 1 part, 1 part?
         "ingredients": ["1 part espresso", "2 parts steamed milk", "A thin layer of foamed milk"],
         "backend_ingredients": ["1 part espresso", "1 part steamed milk", "1 part steamed milk", "A thin layer of foamed milk"],
@@ -57,7 +57,7 @@ drinks = [
         "id": 2,
         "name": "Cappuccino",
         "price": 12,
-        "img": "../static/images/cappuccino.png",
+        "img": "../static/images/cappuccino.jpg",
         "ingredients": ["1 part espresso", "1 part steamed milk", "1 part foamed milk"],
         "backend_ingredients": ["1 part espresso", "1 part steamed milk", "1 part foamed milk"],
         "ingredients_map" : [
@@ -85,7 +85,7 @@ drinks = [
         "id": 3,
         "name": "Americano",
         "price": 8,
-        "img": "../static/images/americano.png",
+        "img": "../static/images/americano.jpg",
         "ingredients": ["1 part espresso", "2 parts water"],
         "backend_ingredients": ["1 part espresso", "1 part water", "1 part water"],
         "ingredients_map" : [
@@ -108,7 +108,7 @@ drinks = [
         "id": 4,
         "name": "Flat White",
         "price": 8,
-        "img": "../static/images/flat_white.png",
+        "img": "../static/images/flat_white.jpg",
         "ingredients": ["1 part espresso", "2 parts steamed milk"],
         "backend_ingredients": ["1 part espresso", "1 part steamed milk", "1 part steamed milk"],
         "ingredients_map" : [
@@ -131,7 +131,7 @@ drinks = [
         "id": 5,
         "name": "Macchiato",
         "price": 8,
-        "img": "../static/images/macchiato.png",
+        "img": "../static/images/macchiato.jpg",
         "ingredients": ["2 parts espresso", "A splash of steamed milk"],
         "backend_ingredients": ["1 part espresso", "1 part espresso", "A splash of steamed milk"],
         "ingredients_map" : [
