@@ -65,16 +65,7 @@
 
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                    <div class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="jumpToDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Jump To
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="jumpToDropdown">
-                            {% for drink in drinks %} 
-                                <a class="dropdown-item" href="/learn/{{drink.id}}"><li>{{drink.name}}</li></a>
-                            {% endfor %}
-                        </ul>
-                    </div>
+                    
                     <div class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="recipeDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                           Recipes
