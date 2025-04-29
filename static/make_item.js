@@ -1,6 +1,7 @@
 $(document).ready(function(){
     display_all_ingredients();
     display_ingredients(curr_ingredients);
+    reset_ingredients();
 })
 
 $(function() {

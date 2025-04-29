@@ -17,11 +17,13 @@ document.addEventListener('DOMContentLoaded', function() {
         return `<li>${ingredient}</li>`;  
             }).join('');
             modalBody.innerHTML = `<ul>${ingredientList}</ul>`;
+      
     });
 
     recipeModal.addEventListener('hidden.bs.modal', function () {
         let element = document.getElementById('maincontainer');
         element.focus();
       });
+
   }
 });
