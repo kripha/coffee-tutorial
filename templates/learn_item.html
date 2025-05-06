@@ -36,6 +36,9 @@
     #button-div{
         padding-top: 20px;
     }
+    #back-div{
+        padding-top: 20px;
+    }
 </style>
 
 <script>
@@ -86,7 +89,18 @@
 
 </div>
 <div class="row">
-    <div class="col-8">
+    <div class="col-2">
+        
+    </div>
+    <div class="col-2" id="back-div">
+        {% if item.id == 0 %}
+            <a href="/"><button id="next-button">Back</button></a>
+        {% else %} 
+            <a href="/learn/{{item.id - 1}}"><button id="next-button">Back</button></a>
+        {% endif %}
+        
+    </div>
+    <div class="col-4">
 
     </div>
 
