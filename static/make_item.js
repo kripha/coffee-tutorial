@@ -1,27 +1,35 @@
 $(document).ready(function(){
     display_all_ingredients();
+    ingredients_draggable();
 })
 
+// $(function(){
+//     $( ".draggable" ).draggable({
+//         revert: "invalid"
+//     });
+//     $(".draggable").hover(function(){
+//         $(this).css('cursor','move');
+//     });
+//     $( "#beaker" ).droppable({
+//         over: function(event, ui) {
+//             $(this).css('background-color', 'lightblue'); 
+//         },
+//         out: function(event, ui) {
+//             $(this).css('background-color', 'white');
+//         },
+//         drop: function(event, ui) {
+//             $(this).css('background-color', 'white');
+//             let droppedEvent = ui.helper[0].innerText;
+//             let ingredient = droppedEvent.trim();
+//             addIngredient(ingredient);
+//             display_all_ingredients();
+//         }
+//     });
+// })
+
 $(function(){
-    $( ".draggable" ).draggable({
-        revert: "invalid"
-    });
-    $(".draggable").hover(function(){
-        $(this).css('cursor','move');
-    });
-    $( "#beaker" ).droppable({
-        over: function(event, ui) {
-            $(this).css('background-color', 'lightblue'); 
-        },
-        out: function(event, ui) {
-            $(this).css('background-color', 'white');
-        },
-        drop: function(event, ui) {
-            $(this).css('background-color', 'white');
-            let droppedEvent = ui.helper[0].innerText;
-            alert(droppedEvent);
-            display_all_ingredients();
-        }
+    $('#reset-button').click(function() {
+        reset_ingredients();
     });
 })
 
@@ -42,7 +50,8 @@ function ingredients_draggable(){
         drop: function(event, ui) {
             $(this).css('background-color', 'white');
             let droppedEvent = ui.helper[0].innerText;
-            alert(droppedEvent);
+            let ingredient = droppedEvent.trim();
+            addIngredient(ingredient);
             display_all_ingredients();
         }
     });
@@ -110,64 +119,63 @@ function display_all_ingredients(){
 //       });
 //   } );
 
-// function addIngredient(ingredient){
-//     let data_to_save = {"ingredient": ingredient}
-//     $.ajax({
-//         type: "POST",
-//         url: "save_ingredient",
-//         dataType: "json",
-//         contentType: "application/json; charset=utf-8",
-//         data : JSON.stringify(data_to_save),
-//         success: function(result){
-//             let curr_ingreds = result["curr_ingredients"]
-//             ingredients = curr_ingreds
-//             display_ingredients(ingredients)
-//         },
-//         error: function(request, status, error){
-//             console.log("Error saving ingredient");
-//             console.log(request)
-//             console.log(status)
-//             console.log(error)
-//         }
-//     })
-// }
+function addIngredient(ingredient){
+    let data_to_save = {"ingredient": ingredient}
+    $.ajax({
+        type: "POST",
+        url: "save_ingredient",
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        data : JSON.stringify(data_to_save),
+        success: function(result){
+            let curr_ingreds = result["curr_ingredients"]
+            ingredients = curr_ingreds
+            display_ingredients(ingredients)
+        },
+        error: function(request, status, error){
+            console.log("Error saving ingredient");
+            console.log(request)
+            console.log(status)
+            console.log(error)
+        }
+    })
+}
 
-// function display_ingredients(ingredients){
-//     if(ingredients.length == 0){
-//         $("#drop-container").html("Drop here");
-//     }
-//     else {
-//         $("#drop-container").html("");
-//         for(let i = 0; i < ingredients.length; i++){
-//             ingred = ingredients[i];
-//             $("#drop-container").append(ingred);
-//             $("#drop-container").append("<br>");
-//         }
-//     }
-// }
-
+function display_ingredients(ingredients){
+    if(ingredients.length == 0){
+        $("#beaker").html("");
+    }
+    else {
+        $("#beaker").html("");
+        for(let i = 0; i < ingredients.length; i++){
+            ingred = ingredients[i];
+            $("#beaker").append('<div class="ingred">' + ingred + '</div>');
+        }
+    }
+}
 
 
-// function reset_ingredients(){
-//     $("#resultdiv").html("")
-//     $.ajax({
-//         type: "GET",
-//         url: "reset_ingredients",
-//         dataType: "json",
-//         contentType: "application/json; charset=utf-8",
-//         success: function(result){
-//             let curr_ingreds = result["curr_ingredients"]
-//             ingredients = curr_ingreds
-//             display_ingredients(ingredients)
-//         },
-//         error: function(request, status, error){
-//             console.log("Error resetting ingredients");
-//             console.log(request)
-//             console.log(status)
-//             console.log(error)
-//         }
-//     })
-// }
+
+function reset_ingredients(){
+    $("#resultdiv").html("");
+    $.ajax({
+        type: "GET",
+        url: "reset_ingredients",
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: function(result){
+            let curr_ingreds = result["curr_ingredients"]
+            ingredients = curr_ingreds;
+            display_ingredients(ingredients);
+        },
+        error: function(request, status, error){
+            console.log("Error resetting ingredients");
+            console.log(request)
+            console.log(status)
+            console.log(error)
+        }
+    })
+}
 
 // function submit_ingredients(ingredients){
 //     let path = window.location.pathname;  // e.g., "/make/123"

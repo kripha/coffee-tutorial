@@ -235,7 +235,6 @@ def inject_drinks():
 def save_ingredient():
     global all_ingredients
     global curr_ingredients
-    
 
     json_data = request.get_json()   
     
