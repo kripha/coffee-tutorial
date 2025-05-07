@@ -1,9 +1,15 @@
-from flask import Flask
+import uuid
+from enum import Enum
+from typing import List
+
+from flask import Flask, session
 from flask import render_template
 from flask import Response, request, jsonify
+from pydantic import BaseModel
 from collections import Counter
 import random
 app = Flask(__name__)
+app.secret_key = str(uuid.uuid4())
 
 drinks = [
     {
@@ -200,11 +206,26 @@ def make(id):
 
 @app.route('/quiz')
 def quiz():
-    return render_template('quiz_home.html', all_drinks=drinks)
+    return render_template('quiz_home.html')
 
 @app.route('/quiz_item')
 def quiz_item():
     return render_template('quiz_item.html', all_drinks=drinks)
+
+@app.route('/quiz_report')
+def quiz_report():
+    score = session.get('score', 0)
+    coins = session.get('coins', 0)
+    drink_missed = session.get('drink_missed', [])
+    return render_template('quiz_report.html', score=score, coins=coins, drink_missed=drink_missed)
+
+@app.route('/quiz_report_data', methods=['POST'])
+def quiz_report_data():
+    data = request.get_json()
+    session['score'] = data['score']
+    session['coins'] = data['coins']
+    session['drink_missed'] = data.get('drink_missed', [])
+    return jsonify(success=True)
 
 @app.context_processor
 def inject_drinks():

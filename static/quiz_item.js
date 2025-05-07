@@ -8,6 +8,9 @@ $(function () {
     function showNextPrompt() {
         if (currentIndex >= shuffled.length) {
             $("#speech-bubble").html(`You're done!<br>You scored <strong>${score} out of ${shuffled.length}</strong>.`);
+            // TODO: Send coins, score, and drink missed to /quiz_report_data (POST)
+            // TODO: Call the function commented below after successfully return from /quiz_report_data
+            // window.location.href='/quiz_report'
             $("#main-cup").empty();
             return;
         }
@@ -52,7 +55,7 @@ $(function () {
     $("#dump-button").click(function () {
         $("#main-cup").empty().append("<p>Drop Here</p>");
     });
-  
+
     $("#submit-button").click(function () {
         const userIngredients = [];
     

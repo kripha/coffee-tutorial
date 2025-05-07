@@ -1,0 +1,120 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<script>
+  let score = {{score|tojson}}
+  let coins = {{coins|tojson}}
+  let drink_missed = {{drink_missed|tojson}}
+</script>
+
+<style>
+  #quiz_title{
+    text-align: center;
+    font-size: 36px;
+    padding: 20px;
+  }
+  #desc{
+    text-align: center;
+    font-size: 20px;
+    padding: 10px;
+  }
+  #start{
+    text-align: center;
+    padding: 30px;
+  }
+  #tryagain{
+    background-color: #a3795bff;
+    color: #f5f5dc;
+    font-size: 26px;
+    border: none;
+    border-radius: 20px;
+    width: 200px;
+    height: 80px;
+  }
+  #quiz_home{
+    background-color: #f5f5dc;
+    color: #a3795bff;
+    font-size: 26px;
+    border: none;
+    border-radius: 20px;
+    width: 200px;
+    height: 80px;
+  }
+  .stars {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+  .trybtn {
+    padding-bottom: 20px;
+  }
+</style>
+
+
+
+<div class="container text-center my-5">
+
+  <div class="row stars">
+    <div class="col-12 col-lg-4"></div>
+    <div class="col-12 col-lg-4">
+      <div class="row">
+        <div class="col-4">
+          <img src="/static/images/star.png" width="80">
+        </div>
+        <div class="col-4">
+          <img src="/static/images/star.png" width="80">
+        </div>
+        <div class="col-4">
+          <img src="/static/images/star.png" width="80">
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-lg-4"></div>
+  </div>
+
+
+  <div class="row justify-content-center mb-2">
+    <div class="col-auto fs-4 d-flex align-items-center">
+      <img src="/static/images/coin.png" alt="coin" style="height: 30px; width: auto; margin-right: 10px;">
+      <span>Total Coins Earned: <strong>{{ coins }}</strong></span>
+    </div>
+  </div>
+
+  {% if drink_missed %}
+  <div class="row justify-content-center mb-4">
+    <div class="col-auto fs-4 d-flex align-items-center">
+      <img src="/static/images/incorrect.png" alt="coin" style="height: 30px; width: auto; margin-right: 10px;">
+      Drinks Missed: <strong>{{ drink_missed | join(', ') }}</strong>
+    </div>
+  </div>
+  {% endif %}
+
+  <div class="row justify-content-center mb-2">
+    <div class="col-auto fs-4">
+      Total Score: <strong>{{ score }}/10</strong>
+    </div>
+  </div>
+</div>
+
+<div>
+  <div class="row">
+    <div class="col-2"></div>
+    <div class="col-8">
+      <div class="row d-flex justify-content-center">
+        <div class="col-12 col-md-4 col-lg-4 text-center trybtn">
+          <a href="/quiz_item">
+            <button id="tryagain">Try Again</button>
+          </a>
+        </div>
+        <div class="col-12 col-md-4 col-lg-4 text-center">
+          <a href="/">
+            <button id="quiz_home">Home</button>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="col-2"></div>
+  </div>
+</div>
+
+
+{% endblock %}
