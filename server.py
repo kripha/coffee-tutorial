@@ -147,6 +147,33 @@ drinks = [
     }
 ]
 
+mc_questions = [
+    {
+        "choices": ["Macchiato", "Latte", "Flat White", "Cappuccino"],
+        "correct_answer": 0
+    },
+    {
+        "choices": ["Flat White", "Espresso", "Cappuccino", "Latte"],
+        "correct_answer": 1
+    },
+    {
+        "choices": ["Latte", "Flat White", "Americano", "Cappuccino"],
+        "correct_answer": 2
+    },
+    {
+        "choices": ["Macchiato", "Espresso", "Americano", "Flat White"],
+        "correct_answer": 3
+    },
+    {
+        "choices": ["Latte", "Americano", "Macchiato", "Espresso"],
+        "correct_answer": 0
+    },
+        {
+        "choices": ["Espresso", "Cappuccino", "Flat White", "Americano"],
+        "correct_answer": 1
+    }
+]
+
 
 all_ingredients = ["1 part espresso", "A splash of steamed milk", "1 part steamed milk",
                 "A thin layer of foamed milk", "1 part foamed milk", "1 part water"]
