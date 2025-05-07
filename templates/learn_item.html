@@ -39,6 +39,14 @@
     #back-div{
         padding-top: 20px;
     }
+    .learn-container {
+        margin-top: 10px;
+        /* background-color: lightblue; */
+        padding: 10px;
+    }
+    /* .learn-container {
+        padding: 0px;
+    } */
 </style>
 
 <script>
@@ -50,12 +58,12 @@
 
 
 
-<div class="row">
+<div class="row learn-container">
     <div class="col-1">
 
     </div>
 
-    <div class="home_container col-4" id="title">
+    <div class="col-4" id="title">
         <div id="drinkname">
             {{item['name']}}
         </div>
@@ -66,7 +74,7 @@
 
     </div>
 
-    <div class="home_container col-4 d-flex align-items-center" id="info-wrapper">
+    <div class="col-4 d-flex align-items-center" id="info-wrapper">
         <div id="drink-info">
             Ingredients
         <ul>
