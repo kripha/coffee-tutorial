@@ -200,6 +200,10 @@ def make(id):
 
 @app.route('/quiz')
 def quiz():
+    return render_template('quiz_home.html', all_drinks=drinks)
+
+@app.route('/quiz_item')
+def quiz_item():
     return render_template('quiz_item.html', all_drinks=drinks)
 
 @app.context_processor
