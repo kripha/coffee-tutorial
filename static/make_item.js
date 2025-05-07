@@ -1,6 +1,7 @@
 $(document).ready(function(){
     display_all_ingredients();
     ingredients_draggable();
+    reset_ingredients();
 })
 
 // $(function(){
@@ -149,8 +150,27 @@ function display_ingredients(ingredients){
         $("#beaker").html("");
         for(let i = 0; i < ingredients.length; i++){
             ingred = ingredients[i];
-            $("#beaker").append('<div class="ingred">' + ingred + '</div>');
+            let ingred_name = ""
+            if(ingred == "1 part espresso"){
+                ingred_name = "espresso"
+            }
+            if(ingred == "1 part water"){
+                ingred_name = "water"
+            }
+            if(ingred == "1 part foamed milk"){
+                ingred_name = "foamed-milk"
+            }
+            if(ingred == "1 small part foamed milk"){
+                ingred_name = "small-foamed-milk"
+            }
+            if(ingred == "1 steamed milk"){
+                ingred_name = "steamed-milk"
+            }
+            $("#beaker").append('<div class="ingred" id="dropped-' + ingred_name + '">' + ingred + '</div>');
         }
+    }
+    if(ingredients.length >= 5){
+        alert("too many ingredients");
     }
 }
 
