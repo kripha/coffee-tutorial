@@ -32,6 +32,10 @@ $(function(){
     $('#reset-button').click(function() {
         reset_ingredients();
     });
+    $('#submit-button').click(function() {
+        let curr_ingredients = get_curr_ingredients();
+        submit_ingredients(curr_ingredients);
+    });
 })
 
 function ingredients_draggable(){
@@ -200,73 +204,73 @@ function reset_ingredients(){
     })
 }
 
-// function submit_ingredients(ingredients){
-//     let path = window.location.pathname;  // e.g., "/make/123"
-//     let id = path.split('/').pop();       // "123"
-//     let data_to_save = {"curr_ingredients": ingredients, "id": id}
-//     $.ajax({
-//         type: "POST",
-//         url: "submit_ingredients",
-//         dataType: "json",
-//         contentType: "application/json; charset=utf-8",
-//         data : JSON.stringify(data_to_save),
-//         success: function(result){
-//             reset_ingredients();
-//             let res = result["res"]
-//             if(res == "Correct"){
-//                 $("#resultdiv").html("Correct! Proceed to the next page.<br>")
-//                 var button = $('<button/>', {
-//                     text: 'Next Page', 
-//                     id: 'myButton', 
-//                     class: 'my-button-class', 
-//                     click: function() { 
-//                         if(item["id"] == all_drinks.length - 1){
-//                             let url = "/quiz"
-//                             window.location.href = url;
-//                         } else{
-//                             let next_id = parseInt(item["id"], 10) + 1;
-//                             let next_string = next_id.toString();
-//                             let url = "/learn/" + next_string
-//                             window.location.href = url;
-//                         }
-//                     }
-//                   });
-//                   $('#resultdiv').append(button);
-//                   if(item["id"] == all_drinks.length - 1){
-//                     $("#myButton").text("Take Quiz");
-//                   }
-//             }
-//             else{
-//                 $("#resultdiv").html("Incorrect! Try again!")
-//             }
-//         },
-//         error: function(request, status, error){
-//             console.log("Error saving ingredient");
-//             console.log(request)
-//             console.log(status)
-//             console.log(error)
-//         }
-//     })
-// }
+function submit_ingredients(ingredients){
+    let path = window.location.pathname;  
+    let id = path.split('/').pop();       
+    let data_to_save = {"curr_ingredients": ingredients, "id": id}
+    $.ajax({
+        type: "POST",
+        url: "submit_ingredients",
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        data : JSON.stringify(data_to_save),
+        success: function(result){
+            reset_ingredients();
+            let res = result["res"]
+            if(res == "Correct"){
+                $("#result-div").html("Correct! Proceed to the next page.<br>");
+                var button = $('<button/>', {
+                    text: 'Next Page', 
+                    id: 'myButton', 
+                    class: 'my-button-class standard-button', 
+                    click: function() { 
+                        if(item["id"] == all_drinks.length - 1){
+                            let url = "/quiz"
+                            window.location.href = url;
+                        } else{
+                            let next_id = parseInt(item["id"], 10) + 1;
+                            let next_string = next_id.toString();
+                            let url = "/learn/" + next_string
+                            window.location.href = url;
+                        }
+                    }
+                  });
+                  $('#result-div').append(button);
+                  if(item["id"] == all_drinks.length - 1){
+                    $("#myButton").text("Take Quiz");
+                  }
+            }
+            else{
+                $("#result-div").html("Incorrect! Try again!")
+            }
+        },
+        error: function(request, status, error){
+            console.log("Error saving ingredient");
+            console.log(request)
+            console.log(status)
+            console.log(error)
+        }
+    })
+}
 
-// function get_curr_ingredients(){
-//     $.ajax({
-//         type: "GET",
-//         url: "get_curr_ingredients",
-//         dataType: "json",
-//         contentType: "application/json; charset=utf-8",
-//         success: function(result){
-//             let curr_ingreds = result["curr_ingredients"]
-//             ingredients = curr_ingreds
-//         },
-//         error: function(request, status, error){
-//             console.log("Error resetting ingredients");
-//             console.log(request)
-//             console.log(status)
-//             console.log(error)
-//         }
-//     })
-//     return ingredients;
-// }
+function get_curr_ingredients(){
+    $.ajax({
+        type: "GET",
+        url: "get_curr_ingredients",
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: function(result){
+            let curr_ingreds = result["curr_ingredients"]
+            ingredients = curr_ingreds
+        },
+        error: function(request, status, error){
+            console.log("Error resetting ingredients");
+            console.log(request)
+            console.log(status)
+            console.log(error)
+        }
+    })
+    return ingredients;
+}
 
   
