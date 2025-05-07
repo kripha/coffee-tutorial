@@ -296,7 +296,7 @@ def deliver():
         count = item["count"]
         unit = item["unit"]
 
-        if unit in ["splash", "thin layer"]:
+        if unit in ["small part"]:
             correct_list.append(f"A {unit} of {name}")
         else:
             for _ in range(count):

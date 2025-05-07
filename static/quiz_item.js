@@ -37,6 +37,7 @@ $(function () {
                 if (milkUnit === "part") {
                     ingredient = milkType.charAt(0).toUpperCase() + milkType.slice(1); // e.g. "Steamed milk"
                 } else {
+                    console.log(milkUnit)
                     ingredient = `A ${milkUnit} of ${milkType}`;
                 }
             } else {
