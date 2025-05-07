@@ -174,7 +174,7 @@ mc_questions = [
         "correct_answer": 0
     },
     {
-        "choices": ["Espresso", "Cappuccino", "Flat White", "Americano"],
+        "choices": ["Espresso", "Cappuccino", "Macchiato", "Americano"],
         "correct_answer": 1
     }
 ]
