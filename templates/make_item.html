@@ -15,47 +15,138 @@
     let curr_ingredients = {{curr_ingredients|tojson}}
 </script>
 
-<script src="{{ url_for('static', filename='make_item.js') }}"></script>
+<!-- <script src="{{ url_for('static', filename='make_item.js') }}"></script> -->
+<style>
+    .mc-question{
+        text-align: left;
+        margin-top: 10px;
+        font-size: 36px;
+        width: 900px;
+        /* border: 1px solid red; */
+    }
+    img {
+        width: 130px;
+        margin: 10px;
+        /* border: 1px solid green; */
+    }
+    .ingredients-container{
+        /* border: 1px solid red; */
+        padding: 10px;
+    }
+    #steamed-milk-img{
+        width: 170px;
+        margin-left: 0px;
+    }
+    #small-foamed-milk-img{
+        width: 100px;
+    }
+    #drop-container{
+        /* border: 1px solid red; */
+        margin-left: 0px;
+    }
+    #beaker{
+        width: 300px;
+        height: 350px;
+        border: 3px solid black;
+        border-radius: 20px;
+        margin-top: 10px;
+    }
+    #submit-button {
+        padding: 10px;
+        width: 175px;
+        height: 60px;
+    }
+    #reset-button {
+        width: 150px;
+        height: 50px;
+        padding: 10px;
+        margin-top: 5px;
+        margin-left: 70px;
+        background-color: #f5f5dc;
+        color: #a3795bff;
+        border: 1px solid#a3795bff;
+    }
+    #buttons-row{
+        margin-top: 10px;
+        vertical-align: middle;
+        padding-left: 65px;
+    }
 
-<div> Drag and drop ingredients to make a cup of {{item["name"]}}</div>
+
+</style>
+
+<!-- <div> Drag and drop ingredients to make a cup of {{item["name"]}}</div> -->
 <div class="row">
-    <div class="col-1">
-
+    <div class="col-2"></div> <!--padding-->
+    <div class="col-4 mc-question">
+        Drag and drop ingredients to make a cup of {{item["name"]}}
     </div>
+</div>
+<div class="row">
+    <div class="col-1"></div> <!--padding-->
 
-    <div class="home_container col-4" id="drag-container">
+    <div class="col-3 ingredients-container" id="drag-container">
         <!-- TODO: make into draggable objects -->
-        
+        <div>
+            <img src="../static/images/ingredients/espresso-shot.png">
+            1 part espresso
+        </div>
+        <div>
+            <img src="../static/images/ingredients/frothed-milk.png">
+            1 part foamed milk
+        </div>
+        <div>
+            <img id="small-foamed-milk-img" src="../static/images/ingredients/frothed-milk.png">
+            1 small part foamed milk
+        </div>
 
     </div>
-
-    <div class="col-1">
-
+    <div class="col-3 ingredients-container" id="drag-container">
+        <!-- TODO: make into draggable objects -->
+        <div>
+            <img src="../static/images/ingredients/glass-of-water.png">
+            1 part water
+        </div>
+        <div>
+            <img id="steamed-milk-img" src="../static/images/ingredients/steamed-milk.png">
+            1 steamed milk
+        </div>
     </div>
 
-    <div class="home_container col-4 droppable" id ="drop-container">
-        Drag Here
-        <!-- TODO: make into droppable object -->
+
+    <div class="col-4 droppable" id ="drop-container">
+        <div class="row">
+            Drop Here
+        </div>
+        <div id="beaker" class="row">
+            <!-- TODO: make into droppable object -->
+            
+        </div>
+        <div class="row" id="buttons-row">
+            <button id="submit-button" class="standard-button">Mix</button>
+            <button id="reset-button" class="standard-button">Reset</button>
+        </div>
     </div>
 </div>
 
 <div id="resultdiv"></div>
 
 <div class="row">
+    <div class="col-2"></div> <!--padding-->
     <div class=" col-2">
-        <a href="/learn/{{item.id}}"><button id="back-button">Back</button></a>
+        <a href="/learn/{{item.id}}"><button class="standard-button" id="back-button">Back</button></a>
     </div>
-    <div class="home_container col-1">
+    <!-- <div class="col-1">
         <button id="resetButton">Reset</button>
-    </div>
+    </div> -->
     <div class="col-6">
 
     </div>
 
-    <div class="home_container col-1">
-        <button id="submitButton">Submit</button>
+    <!-- <div class="col-1">
+        <button id="submitButton">Submit</button> -->
         <!-- TODO: check correctness and give feedback -->
-    </div>
+    <!-- </div> -->
     <!-- TODO: add next button when submission is correct -->
 </div>
 
