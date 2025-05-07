@@ -170,7 +170,10 @@ function display_ingredients(ingredients){
         }
     }
     if(ingredients.length >= 5){
-        alert("too many ingredients");
+        $("#resultdiv").html("Too many ingredients. Either reset or mix.");
+        $("#beaker").droppable("disable");
+    } else{
+        $("#resultdiv").html("");
     }
 }
 
