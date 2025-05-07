@@ -116,8 +116,7 @@ drinks = [
         ],
         "taste_profile": "Milky",
         "similar_drinks": ["Latte", "Cappuccino"]
-    }
-    
+    },
     {
         "id": 5,
         "name": "Latte",
@@ -168,7 +167,7 @@ mc_questions = [
         "choices": ["Latte", "Americano", "Macchiato", "Espresso"],
         "correct_answer": 0
     },
-        {
+    {
         "choices": ["Espresso", "Cappuccino", "Flat White", "Americano"],
         "correct_answer": 1
     }
@@ -193,7 +192,7 @@ def learn(id):
 
 @app.route('/multiple-choice/<id>')
 def multiple_choice(id):
-    return render_template('multiple_choice.html', item = drinks[int(id)])
+    return render_template('multiple_choice.html', item = drinks[int(id)], mc_question=mc_questions[int(id)])
 
 @app.route('/make/<id>')
 def make(id):

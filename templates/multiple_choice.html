@@ -50,17 +50,13 @@
         padding-bottom: 20px;
         border-radius: 20px;
 
-        /* margin-right: 10px; */
         margin-bottom: 20px;
         width: 300px;
         height: 100px;
     }
     .mc-question{
-        /* background-color: lightblue; */
-        /* border: 1px solid red; */
         text-align: left;
         margin-top: 10px;
-        /* padding-top: 100px; */
         font-size: 36px;
         width: 900px;
     }
@@ -69,16 +65,13 @@
 
 <script>
     let item = {{item|tojson}}
+    let mc_question = {{mc_question|tojson}}
 </script>
 
-<!-- <div class="row">
-    <div class="col-2"></div>
-    <div class="col-6 mc-question"> What is similar?</div>
-</div> -->
 <div class="row">
     <div class="col-2"></div> <!--padding-->
     <div class="col-4 mc-question">
-        Which of the following is similar to a cup of Espresso?
+        Which of the following is similar to a cup of {{item['name']}}?
     </div>
 </div>
 
@@ -94,13 +87,13 @@
 
     <div class="col-6 d-flex align-items-center">
         <div class="row">
-            <button class="mc-button">Latte</button>
-            <button class="mc-button">Flat White</button>
+            <button class="mc-button">{{mc_question["choices"][0]}}</button>
+            <button class="mc-button">{{mc_question["choices"][1]}}</button>
         </div>
         
         <div class="row">
-            <button class="mc-button">Americano</button>
-            <button class="mc-button">Cappuccino</button>
+            <button class="mc-button">{{mc_question["choices"][2]}}</button>
+            <button class="mc-button">{{mc_question["choices"][3]}}</button>
         </div>
 
     </div>
@@ -108,9 +101,8 @@
 </div>
 
 <div class="row">
-    <div class="col-2">
-        
-    </div>
+    <div class="col-2"></div> <!--padding-->
+    
     <div class="col-2" id="back-div">
         {% if item.id == 0 %}
             <a href="/"><button id="next-button">Back</button></a>
@@ -119,12 +111,12 @@
         {% endif %}
         
     </div>
-    <div class="col-4">
 
-    </div>
-
-    <div class="col-2" id="button-div">
+    <div class="col-4"></div> <!--padding-->
+<!-- 
+    TODO: have next button show up when answer is correct -->
+    <!-- <div class="col-2" id="button-div">
         <a href="/make/{{item.id}}"><button id="next-button">Next</button></a>
-    </div>
+    </div> -->
 </div>
 {% endblock %}
