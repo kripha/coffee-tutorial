@@ -115,7 +115,7 @@
         {% if item.id == 0 %}
             <a href="/"><button id="back-button">Back</button></a>
         {% else %} 
-            <a href="/learn/{{item.id - 1}}"><button id="back-button">Back</button></a>
+            <a href="/make/{{item.id - 1}}"><button id="back-button">Back</button></a>
         {% endif %}
         
     </div>
@@ -124,7 +124,7 @@
     </div>
 
     <div class="col-2" id="button-div">
-        <a href="/make/{{item.id}}"><button id="next-button">Next</button></a>
+        <a href="/multiple-choice/{{item.id}}"><button id="next-button">Next</button></a>
     </div>
 </div>
 
