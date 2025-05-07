@@ -187,6 +187,7 @@ function display_ingredients(ingredients){
 
 function reset_ingredients(){
     $("#resultdiv").html("");
+    $("#beaker").droppable("enable");
     $.ajax({
         type: "GET",
         url: "reset_ingredients",
