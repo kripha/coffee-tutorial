@@ -1,180 +1,241 @@
 $(document).ready(function(){
     display_all_ingredients();
-    display_ingredients(curr_ingredients);
-    reset_ingredients();
 })
 
-$(function() {
+$(function(){
     $( ".draggable" ).draggable({
         revert: "invalid"
     });
     $(".draggable").hover(function(){
         $(this).css('cursor','move');
     });
-
-    $( ".droppable" ).droppable({
+    $( "#beaker" ).droppable({
         over: function(event, ui) {
-            $(this).css('background-color', 'lightyellow'); 
+            $(this).css('background-color', 'lightblue'); 
         },
         out: function(event, ui) {
-            $(this).css('background-color', 'lightblue');
+            $(this).css('background-color', 'white');
         },
         drop: function(event, ui) {
-            $(this).css('background-color', 'lightblue');
+            $(this).css('background-color', 'white');
             let droppedEvent = ui.helper[0].innerText;
-            addIngredient(droppedEvent);
+            alert(droppedEvent);
             display_all_ingredients();
         }
-      });
+    });
+})
 
-
-      $('#resetButton').click(function() {
-        reset_ingredients();
-      });
-
-      $('#submitButton').click(function() {
-        let curr_ingredients = get_curr_ingredients();
-        submit_ingredients(curr_ingredients);
-      });
-  } );
-
-function addIngredient(ingredient){
-    let data_to_save = {"ingredient": ingredient}
-    $.ajax({
-        type: "POST",
-        url: "save_ingredient",
-        dataType: "json",
-        contentType: "application/json; charset=utf-8",
-        data : JSON.stringify(data_to_save),
-        success: function(result){
-            let curr_ingreds = result["curr_ingredients"]
-            ingredients = curr_ingreds
-            display_ingredients(ingredients)
-        },
-        error: function(request, status, error){
-            console.log("Error saving ingredient");
-            console.log(request)
-            console.log(status)
-            console.log(error)
-        }
-    })
-}
-
-function display_ingredients(ingredients){
-    if(ingredients.length == 0){
-        $("#drop-container").html("Drop here");
-    }
-    else {
-        $("#drop-container").html("");
-        for(let i = 0; i < ingredients.length; i++){
-            ingred = ingredients[i];
-            $("#drop-container").append(ingred);
-            $("#drop-container").append("<br>");
-        }
-    }
-}
-
-function display_all_ingredients(){
-    $("#drag-container").html("");
-    for(let i = 0; i < all_ingredients.length; i++){
-        $("#drag-container").append("<div class='draggable' id='ingred-" + i + "'>" + all_ingredients[i] + "</div>");
-    }
-    $(".draggable").draggable({
+function ingredients_draggable(){
+    $( ".draggable" ).draggable({
         revert: "invalid"
     });
     $(".draggable").hover(function(){
         $(this).css('cursor','move');
     });
+    $( "#beaker" ).droppable({
+        over: function(event, ui) {
+            $(this).css('background-color', 'lightblue'); 
+        },
+        out: function(event, ui) {
+            $(this).css('background-color', 'white');
+        },
+        drop: function(event, ui) {
+            $(this).css('background-color', 'white');
+            let droppedEvent = ui.helper[0].innerText;
+            alert(droppedEvent);
+            display_all_ingredients();
+        }
+    });
 }
 
-function reset_ingredients(){
-    $("#resultdiv").html("")
-    $.ajax({
-        type: "GET",
-        url: "reset_ingredients",
-        dataType: "json",
-        contentType: "application/json; charset=utf-8",
-        success: function(result){
-            let curr_ingreds = result["curr_ingredients"]
-            ingredients = curr_ingreds
-            display_ingredients(ingredients)
-        },
-        error: function(request, status, error){
-            console.log("Error resetting ingredients");
-            console.log(request)
-            console.log(status)
-            console.log(error)
-        }
-    })
+function display_all_ingredients(){
+    $("#water-container").html("");
+    $("#water-container").append('<div class="draggable" id="water">'
+     + '<img src="../static/images/ingredients/glass-of-water.png">'
+      + '1 part water </div>');
+    $("#steamed-milk-container").html("");
+    $("#steamed-milk-container").append('<div class="draggable" id="steamed-milk">'
+        + '<img id="steamed-milk-img" src="../static/images/ingredients/steamed-milk.png">'
+        + '1 steamed milk</div>');
+    $("#espresso-container").html("");
+    $("#espresso-container").append('<div class="draggable" id="espresso"> <img src="../static/images/ingredients/espresso-shot.png"> 1 part espresso</div>');
+    $("#foamed-milk-container").html("");
+    $("#foamed-milk-container").append('<div class="draggable" id="foamed-milk">'
+      + '<img src="../static/images/ingredients/frothed-milk.png">'
+      + '1 part foamed milk</div>');
+    $("#small-foamed-milk-container").html("");
+    $("#small-foamed-milk-container").append('<div class="draggable" id="small-foamed-milk">'
+    + '<img id="small-foamed-milk-img" src="../static/images/ingredients/frothed-milk.png">'
+    + '1 small part foamed milk </div>');
+    ingredients_draggable();
 }
 
-function submit_ingredients(ingredients){
-    let path = window.location.pathname;  // e.g., "/make/123"
-    let id = path.split('/').pop();       // "123"
-    let data_to_save = {"curr_ingredients": ingredients, "id": id}
-    $.ajax({
-        type: "POST",
-        url: "submit_ingredients",
-        dataType: "json",
-        contentType: "application/json; charset=utf-8",
-        data : JSON.stringify(data_to_save),
-        success: function(result){
-            reset_ingredients();
-            let res = result["res"]
-            if(res == "Correct"){
-                $("#resultdiv").html("Correct! Proceed to the next page.<br>")
-                var button = $('<button/>', {
-                    text: 'Next Page', 
-                    id: 'myButton', 
-                    class: 'my-button-class', 
-                    click: function() { 
-                        if(item["id"] == all_drinks.length - 1){
-                            let url = "/quiz"
-                            window.location.href = url;
-                        } else{
-                            let next_id = parseInt(item["id"], 10) + 1;
-                            let next_string = next_id.toString();
-                            let url = "/learn/" + next_string
-                            window.location.href = url;
-                        }
-                    }
-                  });
-                  $('#resultdiv').append(button);
-                  if(item["id"] == all_drinks.length - 1){
-                    $("#myButton").text("Take Quiz");
-                  }
-            }
-            else{
-                $("#resultdiv").html("Incorrect! Try again!")
-            }
-        },
-        error: function(request, status, error){
-            console.log("Error saving ingredient");
-            console.log(request)
-            console.log(status)
-            console.log(error)
-        }
-    })
-}
+// $(document).ready(function(){
+//     display_all_ingredients();
+//     display_ingredients(curr_ingredients);
+//     reset_ingredients();
+// })
 
-function get_curr_ingredients(){
-    $.ajax({
-        type: "GET",
-        url: "get_curr_ingredients",
-        dataType: "json",
-        contentType: "application/json; charset=utf-8",
-        success: function(result){
-            let curr_ingreds = result["curr_ingredients"]
-            ingredients = curr_ingreds
-        },
-        error: function(request, status, error){
-            console.log("Error resetting ingredients");
-            console.log(request)
-            console.log(status)
-            console.log(error)
-        }
-    })
-    return ingredients;
-}
+// $(function() {
+//     $( ".draggable" ).draggable({
+//         revert: "invalid"
+//     });
+//     $(".draggable").hover(function(){
+//         $(this).css('cursor','move');
+//     });
+
+//     $( "#beaker" ).droppable({
+//         over: function(event, ui) {
+//             $(this).css('background-color', 'lightyellow'); 
+//         },
+//         out: function(event, ui) {
+//             $(this).css('background-color', 'lightblue');
+//         },
+//         drop: function(event, ui) {
+//             $(this).css('background-color', 'lightblue');
+//             let droppedEvent = ui.helper[0].innerText;
+//             addIngredient(droppedEvent);
+//             display_all_ingredients();
+//         }
+//       });
+
+
+//       $('#resetButton').click(function() {
+//         reset_ingredients();
+//       });
+
+//       $('#submitButton').click(function() {
+//         let curr_ingredients = get_curr_ingredients();
+//         submit_ingredients(curr_ingredients);
+//       });
+//   } );
+
+// function addIngredient(ingredient){
+//     let data_to_save = {"ingredient": ingredient}
+//     $.ajax({
+//         type: "POST",
+//         url: "save_ingredient",
+//         dataType: "json",
+//         contentType: "application/json; charset=utf-8",
+//         data : JSON.stringify(data_to_save),
+//         success: function(result){
+//             let curr_ingreds = result["curr_ingredients"]
+//             ingredients = curr_ingreds
+//             display_ingredients(ingredients)
+//         },
+//         error: function(request, status, error){
+//             console.log("Error saving ingredient");
+//             console.log(request)
+//             console.log(status)
+//             console.log(error)
+//         }
+//     })
+// }
+
+// function display_ingredients(ingredients){
+//     if(ingredients.length == 0){
+//         $("#drop-container").html("Drop here");
+//     }
+//     else {
+//         $("#drop-container").html("");
+//         for(let i = 0; i < ingredients.length; i++){
+//             ingred = ingredients[i];
+//             $("#drop-container").append(ingred);
+//             $("#drop-container").append("<br>");
+//         }
+//     }
+// }
+
+
+
+// function reset_ingredients(){
+//     $("#resultdiv").html("")
+//     $.ajax({
+//         type: "GET",
+//         url: "reset_ingredients",
+//         dataType: "json",
+//         contentType: "application/json; charset=utf-8",
+//         success: function(result){
+//             let curr_ingreds = result["curr_ingredients"]
+//             ingredients = curr_ingreds
+//             display_ingredients(ingredients)
+//         },
+//         error: function(request, status, error){
+//             console.log("Error resetting ingredients");
+//             console.log(request)
+//             console.log(status)
+//             console.log(error)
+//         }
+//     })
+// }
+
+// function submit_ingredients(ingredients){
+//     let path = window.location.pathname;  // e.g., "/make/123"
+//     let id = path.split('/').pop();       // "123"
+//     let data_to_save = {"curr_ingredients": ingredients, "id": id}
+//     $.ajax({
+//         type: "POST",
+//         url: "submit_ingredients",
+//         dataType: "json",
+//         contentType: "application/json; charset=utf-8",
+//         data : JSON.stringify(data_to_save),
+//         success: function(result){
+//             reset_ingredients();
+//             let res = result["res"]
+//             if(res == "Correct"){
+//                 $("#resultdiv").html("Correct! Proceed to the next page.<br>")
+//                 var button = $('<button/>', {
+//                     text: 'Next Page', 
+//                     id: 'myButton', 
+//                     class: 'my-button-class', 
+//                     click: function() { 
+//                         if(item["id"] == all_drinks.length - 1){
+//                             let url = "/quiz"
+//                             window.location.href = url;
+//                         } else{
+//                             let next_id = parseInt(item["id"], 10) + 1;
+//                             let next_string = next_id.toString();
+//                             let url = "/learn/" + next_string
+//                             window.location.href = url;
+//                         }
+//                     }
+//                   });
+//                   $('#resultdiv').append(button);
+//                   if(item["id"] == all_drinks.length - 1){
+//                     $("#myButton").text("Take Quiz");
+//                   }
+//             }
+//             else{
+//                 $("#resultdiv").html("Incorrect! Try again!")
+//             }
+//         },
+//         error: function(request, status, error){
+//             console.log("Error saving ingredient");
+//             console.log(request)
+//             console.log(status)
+//             console.log(error)
+//         }
+//     })
+// }
+
+// function get_curr_ingredients(){
+//     $.ajax({
+//         type: "GET",
+//         url: "get_curr_ingredients",
+//         dataType: "json",
+//         contentType: "application/json; charset=utf-8",
+//         success: function(result){
+//             let curr_ingreds = result["curr_ingredients"]
+//             ingredients = curr_ingreds
+//         },
+//         error: function(request, status, error){
+//             console.log("Error resetting ingredients");
+//             console.log(request)
+//             console.log(status)
+//             console.log(error)
+//         }
+//     })
+//     return ingredients;
+// }
 
   

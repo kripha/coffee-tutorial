@@ -15,7 +15,7 @@
     let curr_ingredients = {{curr_ingredients|tojson}}
 </script>
 
-<!-- <script src="{{ url_for('static', filename='make_item.js') }}"></script> -->
+<script src="{{ url_for('static', filename='make_item.js') }}"></script>
 <style>
     .mc-question{
         text-align: left;
@@ -39,10 +39,6 @@
     }
     #small-foamed-milk-img{
         width: 100px;
-    }
-    #drop-container{
-        /* border: 1px solid red; */
-        margin-left: 0px;
     }
     #beaker{
         width: 300px;
@@ -87,30 +83,43 @@
 
     <div class="col-3 ingredients-container" id="drag-container">
         <!-- TODO: make into draggable objects -->
-        <div>
-            <img src="../static/images/ingredients/espresso-shot.png">
-            1 part espresso
+        <div id="espresso-container">
+            <div class="draggable" id="espresso">
+                <img src="../static/images/ingredients/espresso-shot.png">
+                1 part espresso
+            </div>
         </div>
-        <div>
-            <img src="../static/images/ingredients/frothed-milk.png">
-            1 part foamed milk
+        <div id="foamed-milk-container">
+            <div class="draggable" id="foamed-milk">
+                <img src="../static/images/ingredients/frothed-milk.png">
+                1 part foamed milk
+            </div>
         </div>
-        <div>
-            <img id="small-foamed-milk-img" src="../static/images/ingredients/frothed-milk.png">
-            1 small part foamed milk
+        <div id="small-foamed-milk-container">
+            <div class="draggable" id="small-foamed-milk">
+                <img id="small-foamed-milk-img" src="../static/images/ingredients/frothed-milk.png">
+                1 small part foamed milk
+            </div>
         </div>
+        
 
     </div>
     <div class="col-3 ingredients-container" id="drag-container">
         <!-- TODO: make into draggable objects -->
-        <div>
-            <img src="../static/images/ingredients/glass-of-water.png">
-            1 part water
+        <div id="water-container">
+            <div class="draggable" id="water">
+                <img src="../static/images/ingredients/glass-of-water.png">
+                1 part water
+            </div>
         </div>
-        <div>
-            <img id="steamed-milk-img" src="../static/images/ingredients/steamed-milk.png">
-            1 steamed milk
+        
+        <div id="steamed-milk-container">
+            <div class="draggable" id="steamed-milk">
+                <img id="steamed-milk-img" src="../static/images/ingredients/steamed-milk.png">
+                1 steamed milk
+            </div>
         </div>
+        
     </div>
 
 
@@ -118,7 +127,7 @@
         <div class="row">
             Drop Here
         </div>
-        <div id="beaker" class="row">
+        <div id="beaker" class="row droppable">
             <!-- TODO: make into droppable object -->
             
         </div>

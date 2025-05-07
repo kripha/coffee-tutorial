@@ -180,8 +180,8 @@ mc_questions = [
 ]
 
 
-all_ingredients = ["1 part espresso", "A splash of steamed milk", "1 part steamed milk",
-                "A thin layer of foamed milk", "1 part foamed milk", "1 part water"]
+all_ingredients = ["1 part espresso", "1 part steamed milk",
+                "1 small part foamed milk", "1 part foamed milk", "1 part water"]
 
 curr_ingredients = []
 
