@@ -149,9 +149,11 @@ function addIngredient(ingredient){
 function display_ingredients(ingredients){
     if(ingredients.length == 0){
         $("#beaker").html("");
+        ingredients_draggable();
     }
     else {
         $("#beaker").html("");
+        ingredients_draggable();
         for(let i = 0; i < ingredients.length; i++){
             ingred = ingredients[i];
             let ingred_name = ""
@@ -242,6 +244,7 @@ function submit_ingredients(ingredients){
             }
             else{
                 $("#result-div").html("Incorrect! Try again!")
+                $("#beaker").droppable("enable");
             }
         },
         error: function(request, status, error){
