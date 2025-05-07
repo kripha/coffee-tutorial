@@ -23,15 +23,14 @@ drinks = [
         "taste_profile": "Bitter",
         "similar_drinks": ["Macchiato", "Americano"]
     },
-    
+
     {
         "id": 1,
-        "name": "Latte",
-        "price": 12,
-        "img": "../static/images/latte.jpg",
-        # TODO: should it be 2 parts of 1 part, 1 part?
-        "ingredients": ["1 part espresso", "2 parts steamed milk", "A thin layer of foamed milk"],
-        "backend_ingredients": ["1 part espresso", "1 part steamed milk", "1 part steamed milk", "A thin layer of foamed milk"],
+        "name": "Americano",
+        "price": 8,
+        "img": "../static/images/americano.jpg",
+        "ingredients": ["1 part espresso", "2 parts water"],
+        "backend_ingredients": ["1 part espresso", "1 part water", "1 part water"],
         "ingredients_map" : [
             {
                 "name": "espresso",
@@ -39,22 +38,38 @@ drinks = [
                 "unit": "part"
             },
             {
-                "name": "steamed milk",
+                "name": "water",
+                "count": 2,
+                "unit": "part"
+            }
+        ],
+        "taste_profile": "Bitter",
+        "similar_drinks": ["Espresso", "Macchiato"]
+    },
+    {
+        "id": 2,
+        "name": "Macchiato",
+        "price": 8,
+        "img": "../static/images/macchiato.jpg",
+        "ingredients": ["2 parts espresso", "1 small part foamed milk"],
+        "backend_ingredients": ["1 part espresso", "1 part espresso", "1 small part steamed milk"],
+        "ingredients_map" : [
+            {
+                "name": "espresso",
                 "count": 2,
                 "unit": "part"
             },
             {
-                "name": "foamed milk",
+                "name": "steamed milk",
                 "count": 1,
-                "unit": "thin layer"
-            },
+                "unit": "small part"
+            }
         ],
-        "taste_profile": "Milky",
-        "similar_drinks": ["Flat White", "Cappuccino"]
+        "taste_profile": "Bitter",
+        "similar_drinks": ["Espresso", "Americano"]
     },
-    
     {
-        "id": 2,
+        "id": 3,
         "name": "Cappuccino",
         "price": 12,
         "img": "../static/images/cappuccino.jpg",
@@ -80,30 +95,6 @@ drinks = [
         "taste_profile": "Milky",
         "similar_drinks": ["Flat White", "Latte"]
     },
-
-    {
-        "id": 3,
-        "name": "Americano",
-        "price": 8,
-        "img": "../static/images/americano.jpg",
-        "ingredients": ["1 part espresso", "2 parts water"],
-        "backend_ingredients": ["1 part espresso", "1 part water", "1 part water"],
-        "ingredients_map" : [
-            {
-                "name": "espresso",
-                "count": 1,
-                "unit": "part"
-            },
-            {
-                "name": "water",
-                "count": 2,
-                "unit": "part"
-            }
-        ],
-        "taste_profile": "Bitter",
-        "similar_drinks": ["Espresso", "Macchiato"]
-    },
-
     {
         "id": 4,
         "name": "Flat White",
@@ -125,37 +116,40 @@ drinks = [
         ],
         "taste_profile": "Milky",
         "similar_drinks": ["Latte", "Cappuccino"]
-    },
-
+    }
+    
     {
         "id": 5,
-        "name": "Macchiato",
-        "price": 8,
-        "img": "../static/images/macchiato.jpg",
-        "ingredients": ["2 parts espresso", "A splash of steamed milk"],
-        "backend_ingredients": ["1 part espresso", "1 part espresso", "A splash of steamed milk"],
+        "name": "Latte",
+        "price": 12,
+        "img": "../static/images/latte.jpg",
+        "ingredients": ["1 part espresso", "2 parts steamed milk", "1 small part foamed milk"],
+        "backend_ingredients": ["1 part espresso", "1 part steamed milk", "1 part steamed milk", "1 small part foamed milk"],
         "ingredients_map" : [
             {
                 "name": "espresso",
-                "count": 2,
+                "count": 1,
                 "unit": "part"
             },
             {
                 "name": "steamed milk",
+                "count": 2,
+                "unit": "part"
+            },
+            {
+                "name": "foamed milk",
                 "count": 1,
-                "unit": "splash"
-            }
+                "unit": "small part"
+            },
         ],
-        "taste_profile": "Bitter",
-        "similar_drinks": ["Espresso", "Americano"]
+        "taste_profile": "Milky",
+        "similar_drinks": ["Flat White", "Cappuccino"]
     }
 ]
 
-# all_ingredients = ["1 part espresso", "2 parts espresso", "A splash of steamed milk", "1 part steamed milk",  
-#                 "2 parts steamed milk", "A thin layer of foamed milk", "1 part foamed milk", "2 parts water"]
 
-all_ingredients = ["1 part espresso", "A splash of steamed milk", "1 part steamed milk",  
-                 "A thin layer of foamed milk", "1 part foamed milk", "1 part water"]
+all_ingredients = ["1 part espresso", "A splash of steamed milk", "1 part steamed milk",
+                "A thin layer of foamed milk", "1 part foamed milk", "1 part water"]
 
 curr_ingredients = []
 
@@ -169,6 +163,10 @@ def home():
 @app.route('/learn/<id>')
 def learn(id):
     return render_template('learn_item.html', item = drinks[int(id)])
+
+@app.route('/multiple-choice/<id>')
+def multiple_choice(id):
+    return render_template('multiple_choice.html', item = drinks[int(id)])
 
 @app.route('/make/<id>')
 def make(id):
