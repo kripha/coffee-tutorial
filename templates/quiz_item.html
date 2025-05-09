@@ -2,17 +2,58 @@
 {% block content %}
 
 <style>
-  .quiz_container {
+  .quiz_layout {
+    display: flex;
+    width: 100%;
+    margin-top: 30px;
+  }
+
+  .left-col, .center-col, .right-col {
+    padding: 10px;
+  }
+
+  .left-col {
+    width: 25%;
+    text-align: center;
+  }
+
+  .center-col {
+    width: 50%;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
-    margin-top: 50px;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .right-col {
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .speech-bubble {
+    position: relative;
+    background-image: url("{{ url_for('static', filename='images/speech_bubble.png') }}");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 600px;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    text-align: center;
+    padding: 20px;
+    margin-top: 15px;
   }
 
   .cup {
     width: 100px;
     height: 120px;
-    margin: 20px;
+    margin: 10px;
     text-align: center;
     border: 1px solid #333;
     border-radius: 5px;
@@ -38,60 +79,68 @@
     padding: 5px;
     text-align: center;
   }
+
+  .btn {
+    margin: 5px;
+  }
 </style>
 
-<h2 id="quiz-title">Coffee Quiz</h2>
+<h2 id="quiz-title" style="text-align: center;">Coffee Quiz</h2>
 
-<div class="quiz_container" style="justify-content: left;">
-    <div id="speech-bubble" style="
-      background: #fff;
-      border: 2px solid #333;
-      border-radius: 10px;
-      padding: 15px 20px;
-      max-width: 300px;
-      font-weight: bold;
-      text-align: center;
-      position: relative;
-      box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
-    ">
-      Make a drink!
+<div class="quiz_layout">
+
+  <!-- Left Column: Character + Speech -->
+  <div class="left-col">
+    <div class="speech-bubble" id="speech-bubble">Make a drink!</div>
+    <img id="character-img" src="{{ url_for('static', filename='images/characters/narrator.png') }}" alt="customer" style="width: 150px; margin-top: 20px;">
+  </div>
+
+  <!-- Center Column: Ingredients -->
+  <div class="center-col">
+    <div class="cup cream draggable" data-ingredient="Cream">Cream</div>
+
+    <div id="milk-cup-container">
+      <select id="milk-type" class="form-select mb-1">
+        <option value="milk">Milk</option>
+        <option value="steamed milk">Steamed Milk</option>
+        <option value="foamed milk">Foamed Milk</option>
+      </select>
+    
+      <select id="milk-unit" class="form-select mb-2">
+        <option value="part">Part</option>
+        <option value="small part">Small part</option>
+      </select>
+    
+      <div class="cup milk draggable" data-ingredient="Milk" id="milk-cup">Milk</div>
     </div>
+
+    <div class="cup water draggable" data-ingredient="Water">Water</div>
+    <div class="cup espresso draggable" data-ingredient="Espresso">Espresso</div>
   </div>
 
-<div class="quiz_container">
-  <div class="cup cream draggable" data-ingredient="Cream">Cream</div>
-
-  <div id="milk-cup-container">
-    <select id="milk-type" class="form-select mb-1">
-      <option value="milk">Milk</option>
-      <option value="steamed milk">Steamed Milk</option>
-      <option value="foamed milk">Foamed Milk</option>
-    </select>
-  
-    <select id="milk-unit" class="form-select mb-2">
-      <option value="part">Part</option>
-      <option value="small part">Small part</option>
-    </select>
-  
-    <div class="cup milk draggable" data-ingredient="Milk" id="milk-cup">Milk</div>
-  </div>
-
-  <div class="main-cup droppable" id="main-cup">
-    <p>Drop Here</p>
-  </div>
-
-  <div class="cup water draggable" data-ingredient="Water">Water</div>
-  <div class="cup espresso draggable" data-ingredient="Espresso">Espresso</div>
-
-  <div class="container" style="justify-content: center; gap: 20px;">
+  <!-- Right Column: Main cup + buttons -->
+  <div class="right-col">
+    <div class="main-cup droppable" id="main-cup">
+      <p>Drop Here</p>
+    </div>
     <button id="dump-button" class="btn btn-secondary">Dump</button>
     <button id="submit-button" class="btn btn-primary">Submit</button>
   </div>
+
 </div>
 
 <script>
-    window.quizData = {{ all_drinks | tojson }};
+  window.quizData = {{ all_drinks | tojson }};
+
+  // Randomly pick a character
+  const characters = [
+    "happy_man.png", "happy_woman.png", "mad_man.png", "mad_woman.png",
+    "narrator.png", "neutral_man.png", "neutral_woman.png"
+  ];
+  const randomChar = characters[Math.floor(Math.random() * characters.length)];
+  document.getElementById("character-img").src = "/static/images/characters/" + randomChar;
 </script>
+
 <script src="{{ url_for('static', filename='quiz_item.js') }}"></script>
 
 {% endblock %}
