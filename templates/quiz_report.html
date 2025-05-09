@@ -57,15 +57,16 @@
     <div class="col-12 col-lg-4"></div>
     <div class="col-12 col-lg-4">
       <div class="row">
-        <div class="col-4">
-          <img src="/static/images/star.png" width="80">
-        </div>
-        <div class="col-4">
-          <img src="/static/images/star.png" width="80">
-        </div>
-        <div class="col-4">
-          <img src="/static/images/star.png" width="80">
-        </div>
+        {% set stars = (score == 8 and 3) or (score >= 5 and 2) or (score >= 3 and 1) or 0 %}
+        {% for i in range(3) %}
+          <div class="col-4">
+            {% if i < stars %}
+              <img src="/static/images/star.png" width="80">
+            {% else %}
+              <img src="/static/images/empty_star.png" width="80">
+            {% endif %}
+          </div>
+        {% endfor %}
       </div>
     </div>
     <div class="col-12 col-lg-4"></div>
@@ -90,7 +91,7 @@
 
   <div class="row justify-content-center mb-2">
     <div class="col-auto fs-4">
-      Total Score: <strong>{{ score }}/10</strong>
+      Total Score: <strong>{{ score }}/8</strong>
     </div>
   </div>
 </div>
