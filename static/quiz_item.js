@@ -1,5 +1,14 @@
 let score = 0;
 
+document.addEventListener("DOMContentLoaded", function () {
+    const characters = ["neutral_man.png", "neutral_woman.png"];
+    const randomChar = characters[Math.floor(Math.random() * characters.length)];
+    const charImg = document.getElementById("character-img");
+    if (charImg) {
+        charImg.src = "/static/images/characters/" + randomChar;
+    }
+});
+
 $(function () {
     const allDrinks = window.quizData || [];
     const shuffled = [...allDrinks].sort(() => Math.random() - 0.5);
@@ -16,39 +25,81 @@ $(function () {
         }
         
         const drink = shuffled[currentIndex];
-        $("#speech-bubble").text(`Make a ${drink.name}`);
+        $("#speech-bubble").text(`Could you make me a ${drink.name}?`);
         $("#main-cup").empty().append("<p>Drop Here</p>");
     }
   
     $(".draggable").draggable({
         revert: "invalid",
-        helper: "clone"
+        helper: "clone",
+        appendTo: "body",
+        containment: "window"
+    });
+
+    // Frother: milk -> frothed milk
+    $("#frother").droppable({
+        accept: "#milk-cup",
+        drop: function (event, ui) {
+        const milkContainer = $("#milk-cup");
+        const newCup = $("<img>")
+            .attr("src", "/static/images/ingredients/frothed-milk.png")
+            .attr("data-ingredient", "Foamed milk")
+            .attr("id", "milk-cup")
+            .addClass("ingredient-img draggable");
+    
+        milkContainer.replaceWith(newCup);
+        newCup.draggable({ revert: "invalid", helper: "clone", appendTo: "body" });
+        }
+    });
+    
+    // Steamer: milk -> steamed milk
+    $("#steamer").droppable({
+        accept: "#milk-cup",
+        drop: function (event, ui) {
+        const milkContainer = $("#milk-cup");
+        const newCup = $("<img>")
+            .attr("src", "/static/images/ingredients/steamed-milk.png")
+            .attr("data-ingredient", "Steamed milk")
+            .attr("id", "milk-cup")
+            .addClass("ingredient-img draggable");
+    
+        milkContainer.replaceWith(newCup);
+        newCup.draggable({ revert: "invalid", helper: "clone", appendTo: "body" });
+        }
     });
   
     $("#main-cup").droppable({
         drop: function (event, ui) {
-            let ingredient;
-      
-            if (ui.draggable.attr("id") === "milk-cup") {
-                const milkType = $("#milk-type").val();
-                const milkUnit = $("#milk-unit").val();
-      
-                // Format based on unit
-                if (milkUnit === "part") {
-                    ingredient = milkType.charAt(0).toUpperCase() + milkType.slice(1); // e.g. "Steamed milk"
-                } else {
-                    console.log(milkUnit)
-                    ingredient = `A ${milkUnit} of ${milkType}`;
-                }
-            } else {
-                ingredient = ui.draggable.data("ingredient");
+            let ingredient = ui.draggable.data("ingredient");
+            let displayName = ingredient;
+        
+            // If dropping frothed or steamed milk, revert tray to plain milk
+            if (ingredient === "Foamed milk" || ingredient === "Steamed milk") {
+                const newMilkCup = $("<img>")
+                .attr("src", "/static/images/ingredients/milk.png")
+                .attr("data-ingredient", "Milk")
+                .attr("id", "milk-cup")
+                .addClass("ingredient-img draggable");
+        
+                $("#milk-cup").replaceWith(newMilkCup);
+                newMilkCup.draggable({ revert: "invalid", helper: "clone", appendTo: "body" });
             }
-      
-            const div = $("<div>").text(ingredient).css({
+        
+            // Apply unit logic to all milk types
+            if (ingredient === "Milk" || ingredient === "Foamed milk" || ingredient === "Steamed milk") {
+                const milkUnit = $("#milk-unit").val();
+                if (milkUnit === "part") {
+                displayName = ingredient;
+                } else {
+                displayName = `A ${milkUnit} of ${ingredient.toLowerCase()}`;
+                }
+            }
+        
+            const div = $("<div>").text(displayName).css({
                 "font-size": "14px",
                 "margin": "2px"
             });
-      
+        
             $(this).append(div);
         }
     });

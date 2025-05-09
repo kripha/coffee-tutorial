@@ -8,22 +8,26 @@
     margin-top: 30px;
   }
 
+  body {
+    overflow-x: hidden;
+  }
+
   .left-col, .center-col, .right-col {
     padding: 10px;
   }
 
   .left-col {
     width: 25%;
+    margin-top: 250px;
     text-align: center;
   }
 
   .center-col {
     width: 50%;
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 15px;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
   }
 
   .right-col {
@@ -33,21 +37,31 @@
     align-items: center;
   }
 
-  .speech-bubble {
+  .speech-wrapper {
     position: relative;
-    background-image: url("{{ url_for('static', filename='images/speech_bubble.png') }}");
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    width: 600px;
-    height: 120px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 300px;
+    margin-left: 90px;
+  }
+
+  .speech-img {
+    margin-left: 80px;
+    width: 220px;
+    height: auto;
+    aspect-ratio: 3 / 2;
+    display: block;
+  }
+
+  .speech-text {
+    position: absolute;
+    top: 20%;
+    left: 10%;
+    right: 10%;
+    font-size: 16px;
+    margin-left: 85px;
     font-weight: bold;
     text-align: center;
-    padding: 20px;
-    margin-top: 15px;
+    word-wrap: break-word;
+    white-space: normal;
   }
 
   .cup {
@@ -65,10 +79,21 @@
     cursor: move;
   }
 
-  .milk { background-color: #f3f3f3; }
-  .cream { background-color: #fff; }
-  .espresso { background-color: #6f4e37; color: white; }
-  .water { background-color: #add8e6; }
+  .ingredient-img {
+    width: 120px;
+    height: auto;
+    margin: 10px;
+    cursor: move;
+  }
+
+  .equipment-zone {
+    width: 120px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
 
   .main-cup {
     width: 140px;
@@ -91,31 +116,48 @@
 
   <!-- Left Column: Character + Speech -->
   <div class="left-col">
-    <div class="speech-bubble" id="speech-bubble">Make a drink!</div>
+    <div class="speech-wrapper">
+      <img src="{{ url_for('static', filename='images/speech_bubble.png') }}" class="speech-img">
+      <div class="speech-text" id="speech-bubble">Make a Cappuccino</div>
+    </div>
     <img id="character-img" src="{{ url_for('static', filename='images/characters/narrator.png') }}" alt="customer" style="width: 150px; margin-top: 20px;">
   </div>
 
   <!-- Center Column: Ingredients -->
   <div class="center-col">
-    <div class="cup cream draggable" data-ingredient="Cream">Cream</div>
-
-    <div id="milk-cup-container">
-      <select id="milk-type" class="form-select mb-1">
-        <option value="milk">Milk</option>
-        <option value="steamed milk">Steamed Milk</option>
-        <option value="foamed milk">Foamed Milk</option>
-      </select>
+    <div class="ingredient-row" style="display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start; gap: 20px;">
+      <div id="milk-cup-container" style="display: flex; flex-direction: column; align-items: center;">
+        <img src="{{ url_for('static', filename='images/ingredients/milk.png') }}"
+          class="ingredient-img draggable"
+          data-ingredient="Milk"
+          id="milk-cup">
     
-      <select id="milk-unit" class="form-select mb-2">
-        <option value="part">Part</option>
-        <option value="small part">Small part</option>
-      </select>
+        <select id="milk-unit" class="form-select mt-1" style="width: 120px;">
+          <option value="part">Part</option>
+          <option value="small part">Small part</option>
+        </select>
+      </div>
     
-      <div class="cup milk draggable" data-ingredient="Milk" id="milk-cup">Milk</div>
+      <img src="{{ url_for('static', filename='images/ingredients/glass-of-water.png') }}"
+        class="ingredient-img draggable"
+        data-ingredient="Water">
+    
+      <img src="{{ url_for('static', filename='images/ingredients/espresso-shot.png') }}"
+        class="ingredient-img draggable"
+        data-ingredient="Espresso">
     </div>
 
-    <div class="cup water draggable" data-ingredient="Water">Water</div>
-    <div class="cup espresso draggable" data-ingredient="Espresso">Espresso</div>
+    <div class="equipment-row" style="display: flex; gap: 100px; justify-content: center; margin-top: 60px;">
+      <div class="equipment-zone droppable" id="frother">
+        <img src="{{ url_for('static', filename='images/equipment/milk-frother.png') }}" alt="Frother" width="80">
+        <p style="text-align: center;">Frother</p>
+      </div>
+      
+      <div class="equipment-zone droppable" id="steamer">
+        <img src="{{ url_for('static', filename='images/equipment/steamer.png') }}" alt="Steamer" width="80">
+        <p style="text-align: center;">Steamer</p>
+      </div>
+    </div>
   </div>
 
   <!-- Right Column: Main cup + buttons -->
@@ -131,14 +173,6 @@
 
 <script>
   window.quizData = {{ all_drinks | tojson }};
-
-  // Randomly pick a character
-  const characters = [
-    "happy_man.png", "happy_woman.png", "mad_man.png", "mad_woman.png",
-    "narrator.png", "neutral_man.png", "neutral_woman.png"
-  ];
-  const randomChar = characters[Math.floor(Math.random() * characters.length)];
-  document.getElementById("character-img").src = "/static/images/characters/" + randomChar;
 </script>
 
 <script src="{{ url_for('static', filename='quiz_item.js') }}"></script>
