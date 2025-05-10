@@ -1,32 +1,94 @@
 let score = 0;
+let characterBase = "";
 
 document.addEventListener("DOMContentLoaded", function () {
-    const characters = ["neutral_man.png", "neutral_woman.png"];
+    const characters = [
+        "happy_man.png", "happy_woman.png", "mad_man.png", "mad_woman.png",
+        "neutral_man.png", "neutral_woman.png"
+    ];
     const randomChar = characters[Math.floor(Math.random() * characters.length)];
+    characterBase = randomChar.includes("man") ? "man" : "woman";
     const charImg = document.getElementById("character-img");
     if (charImg) {
-        charImg.src = "/static/images/characters/" + randomChar;
+        charImg.src = "/static/images/characters/neutral_" + characterBase + ".png";
     }
 });
 
 $(function () {
     const allDrinks = window.quizData || [];
-    const shuffled = [...allDrinks].sort(() => Math.random() - 0.5);
+    // Shuffle and create initial drink-specific prompts
+    const drinkPrompts = [...allDrinks].map(drink => ({
+        type: "specific",
+        drink: drink,
+    }));
+    
+    // Create taste profile prompts
+    const tasteProfilePrompts = [
+        { type: "taste_profile", target_profile: "Milky" },
+        { type: "taste_profile", target_profile: "Bitter" }
+    ];
+    
+    // Randomly insert taste profile prompts into the shuffled array
+    const insertionPoints = [2, 5]; // adjust as desired
+    insertionPoints.forEach((pos, i) => {
+        drinkPrompts.splice(pos, 0, tasteProfilePrompts[i]);
+    });
+    
+    const shuffled = drinkPrompts;
     let currentIndex = 0;
   
     function showNextPrompt() {
         if (currentIndex >= shuffled.length) {
-            $("#speech-bubble").html(`You're done!<br>You scored <strong>${score} out of ${shuffled.length}</strong>.`);
-            // TODO: Send coins, score, and drink missed to /quiz_report_data (POST)
-            // TODO: Call the function commented below after successfully return from /quiz_report_data
-            // window.location.href='/quiz_report'
-            $("#main-cup").empty();
+            const missed = shuffled
+            .filter(d => d.correct === false)
+            .map(d => d.type === "specific" ? d.drink.name : `any ${d.target_profile.toLowerCase()} drink`);
+      
+            fetch("/quiz_report_data", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                score: score,
+                coins: score * 20,
+                drink_missed: missed
+                })
+            }).then(res => {
+                if (res.ok) {
+                    window.location.href = "/quiz_report";
+                } else {
+                    console.error("Failed to submit report");
+                }
+            });
+        
             return;
         }
         
-        const drink = shuffled[currentIndex];
-        $("#speech-bubble").text(`Could you make me a ${drink.name}?`);
+        const prompt = shuffled[currentIndex];
+        
+        if (prompt.type === "specific") {
+            $("#speech-bubble").text(`Could you make me a ${prompt.drink.name}?`);
+        } else {
+            $("#speech-bubble").text(`Could you make me a ${prompt.target_profile.toLowerCase()} drink?`);
+        }
+        
         $("#main-cup").empty().append("<p>Drop Here</p>");
+    }
+
+    function showFeedback(correct, callback) {
+        const charImg = $("#character-img");
+        const speech = $("#speech-bubble");
+      
+        if (correct) {
+            charImg.attr("src", `/static/images/characters/happy_${characterBase}.png`);
+            speech.text("Thanks!");
+        } else {
+            charImg.attr("src", `/static/images/characters/mad_${characterBase}.png`);
+            speech.text("That’s not right...");
+        }
+      
+        setTimeout(() => {
+            charImg.attr("src", `/static/images/characters/neutral_${characterBase}.png`);
+            callback(); // showNextPrompt()
+        }, 3000);
     }
   
     $(".draggable").draggable({
@@ -110,32 +172,64 @@ $(function () {
 
     $("#submit-button").click(function () {
         const userIngredients = [];
-    
+      
         $("#main-cup").children("div").each(function () {
-            userIngredients.push($(this).text().trim());
+          userIngredients.push($(this).text().trim());
         });
-    
-        const currentDrinkId = shuffled[currentIndex].id;
-  
-        fetch("/quiz/deliver", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-            id: currentDrinkId,
-            ingredients: userIngredients
-            })
-        })
-        .then(res => res.json())
-        .then(data => {
-            if (data.res) {
-                score++;
-                alert("Correct!");
-            } else {
-                alert("Incorrect. Try again.");
+      
+        const currentPrompt = shuffled[currentIndex];
+      
+        // Determine list of correct drink IDs to validate against
+        let validDrinkIds = [];
+      
+        if (currentPrompt.type === "specific") {
+            validDrinkIds = [currentPrompt.drink.id];
+        } else if (currentPrompt.type === "taste_profile") {
+            validDrinkIds = allDrinks
+            .filter(d => d.taste_profile === currentPrompt.target_profile)
+            .map(d => d.id);
+        }
+      
+        // Helper: try matching userIngredients against multiple drinks
+        let validated = false;
+        let validationIndex = 0;
+      
+        function tryNextDrink() {
+            if (validationIndex >= validDrinkIds.length) {
+                    currentPrompt.correct = false;
+                    showFeedback(false, () => {
+                    currentIndex++;
+                    showNextPrompt();
+                });
+                return;
             }
-            currentIndex++;
-            showNextPrompt();
-        });
+        
+            const testId = validDrinkIds[validationIndex];
+            validationIndex++;
+        
+            fetch("/quiz/deliver", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                    id: testId,
+                    ingredients: userIngredients
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.res) {
+                    score++;
+                    currentPrompt.correct = true;
+                    showFeedback(true, () => {
+                        currentIndex++;
+                        showNextPrompt();
+                    });
+                } else {
+                    tryNextDrink(); // try next possible match
+                }
+            });
+        }
+      
+        tryNextDrink();
     });
-    showNextPrompt();
-  });
+});

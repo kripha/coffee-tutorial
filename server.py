@@ -296,11 +296,10 @@ def deliver():
         count = item["count"]
         unit = item["unit"]
 
-        if unit in ["small part"]:
-            correct_list.append(f"A {unit} of {name}")
+        if unit == "small part":
+            correct_list.extend([f"A {unit} of {name.lower()}"] * count)
         else:
-            for _ in range(count):
-                correct_list.append(name.capitalize())
+            correct_list.extend([name.capitalize()] * count)
 
     print("Correct ingredients:", correct_list)
     print("Submitted ingredients:", submitted_ingredients)
