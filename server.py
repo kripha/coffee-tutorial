@@ -66,7 +66,7 @@ drinks = [
                 "unit": "part"
             },
             {
-                "name": "steamed milk",
+                "name": "foamed milk",
                 "count": 1,
                 "unit": "small part"
             }
