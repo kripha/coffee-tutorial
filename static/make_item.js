@@ -176,17 +176,17 @@ function display_ingredients(ingredients){
         }
     }
     if(ingredients.length >= 6){
-        $("#resultdiv").html("Too many ingredients. Either reset or mix.");
+        $("#result-div").html("Too many ingredients. Either reset or mix.");
         $("#beaker").droppable("disable");
     } else{
-        $("#resultdiv").html("");
+        $("#result-div").html("");
     }
 }
 
 
 
 function reset_ingredients(){
-    $("#resultdiv").html("");
+    $("#result-div").html("");
     $("#beaker").droppable("enable");
     $.ajax({
         type: "GET",
