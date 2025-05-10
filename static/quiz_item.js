@@ -38,6 +38,7 @@ $(function () {
     let currentIndex = 0;
   
     function showNextPrompt() {
+        console.log("showNextPrompt is called");
         if (currentIndex >= shuffled.length) {
             const missed = shuffled
             .filter(d => d.correct === false)
@@ -72,8 +73,9 @@ $(function () {
         
         $("#main-cup").empty().append("<p>Drop Here</p>");
     }
-
+    showNextPrompt();
     function showFeedback(correct, callback) {
+        console.log("showFeedBack is called");
         const charImg = $("#character-img");
         const speech = $("#speech-bubble");
       
@@ -195,6 +197,7 @@ $(function () {
         let validationIndex = 0;
       
         function tryNextDrink() {
+            console.log("tryNextDrink is called");
             if (validationIndex >= validDrinkIds.length) {
                     currentPrompt.correct = false;
                     showFeedback(false, () => {
