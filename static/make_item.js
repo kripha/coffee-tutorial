@@ -175,7 +175,7 @@ function display_ingredients(ingredients){
             $("#beaker").append('<div class="ingred" id="dropped-' + ingred_name + '">' + ingred + '</div>');
         }
     }
-    if(ingredients.length >= 5){
+    if(ingredients.length >= 6){
         $("#resultdiv").html("Too many ingredients. Either reset or mix.");
         $("#beaker").droppable("disable");
     } else{
