@@ -6,7 +6,10 @@
   let coins = {{coins|tojson}}
   let drink_missed = {{drink_missed|tojson}}
 </script>
-
+<script src="{{ url_for('static', filename='recipe_on.js') }}"></script>
+<script>
+  localStorage.setItem("disableRecipes", "false");
+</script>
 <style>
   #quiz_title{
     text-align: center;

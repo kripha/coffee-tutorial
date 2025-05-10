@@ -3,7 +3,10 @@
 {% block content %}
 
 <script src="{{ url_for('static', filename='multiple_choice.js') }}"></script>
-
+<script src="{{ url_for('static', filename='recipe_on.js') }}"></script>
+<script>
+    localStorage.setItem("disableRecipes", "false");
+</script>
 <style>
     #title{
         text-align: center;

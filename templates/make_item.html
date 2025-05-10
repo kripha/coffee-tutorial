@@ -14,8 +14,11 @@
     let all_drinks = {{all_drinks|tojson}}
     let curr_ingredients = {{curr_ingredients|tojson}}
 </script>
-
+<script src="{{ url_for('static', filename='recipe_on.js') }}"></script>
 <script src="{{ url_for('static', filename='make_item.js') }}"></script>
+<script>
+    localStorage.setItem("disableRecipes", "false");
+</script>
 <style>
     .mc-question{
         text-align: left;
