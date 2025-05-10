@@ -4,30 +4,6 @@ $(document).ready(function(){
     reset_ingredients();
 })
 
-// $(function(){
-//     $( ".draggable" ).draggable({
-//         revert: "invalid"
-//     });
-//     $(".draggable").hover(function(){
-//         $(this).css('cursor','move');
-//     });
-//     $( "#beaker" ).droppable({
-//         over: function(event, ui) {
-//             $(this).css('background-color', 'lightblue'); 
-//         },
-//         out: function(event, ui) {
-//             $(this).css('background-color', 'white');
-//         },
-//         drop: function(event, ui) {
-//             $(this).css('background-color', 'white');
-//             let droppedEvent = ui.helper[0].innerText;
-//             let ingredient = droppedEvent.trim();
-//             addIngredient(ingredient);
-//             display_all_ingredients();
-//         }
-//     });
-// })
-
 $(function(){
     $('#reset-button').click(function() {
         reset_ingredients();
@@ -83,46 +59,6 @@ function display_all_ingredients(){
     + '1 small part foamed milk </div>');
     ingredients_draggable();
 }
-
-// $(document).ready(function(){
-//     display_all_ingredients();
-//     display_ingredients(curr_ingredients);
-//     reset_ingredients();
-// })
-
-// $(function() {
-//     $( ".draggable" ).draggable({
-//         revert: "invalid"
-//     });
-//     $(".draggable").hover(function(){
-//         $(this).css('cursor','move');
-//     });
-
-//     $( "#beaker" ).droppable({
-//         over: function(event, ui) {
-//             $(this).css('background-color', 'lightyellow'); 
-//         },
-//         out: function(event, ui) {
-//             $(this).css('background-color', 'lightblue');
-//         },
-//         drop: function(event, ui) {
-//             $(this).css('background-color', 'lightblue');
-//             let droppedEvent = ui.helper[0].innerText;
-//             addIngredient(droppedEvent);
-//             display_all_ingredients();
-//         }
-//       });
-
-
-//       $('#resetButton').click(function() {
-//         reset_ingredients();
-//       });
-
-//       $('#submitButton').click(function() {
-//         let curr_ingredients = get_curr_ingredients();
-//         submit_ingredients(curr_ingredients);
-//       });
-//   } );
 
 function addIngredient(ingredient){
     let data_to_save = {"ingredient": ingredient}
