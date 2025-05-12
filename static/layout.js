@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
 
+  // Create recipebook
   let recipeModal = document.getElementById('recipeModal');
   
   if (recipeModal) {
@@ -27,9 +28,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
   }
 
-    $("#home").on("click", function () {
-        localStorage.setItem("disableRecipes", "false");
-    });
+  //Enable/Disable Recipebook when necessary
+  $("#home").on("click", function () {
+      localStorage.setItem("disableRecipes", "false");
+  });
 
   if (localStorage.getItem("disableRecipes") === "true") {
     disableRecipeDropdown();

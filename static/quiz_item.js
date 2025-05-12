@@ -2,33 +2,6 @@ let score = 0;
 let characterBase = "";
 
 
-
-// function addIngredient(ingredient){
-//     let data_to_save = {"ingredient": ingredient}
-//     $.ajax({
-//         type: "POST",
-//         url: "save_quiz_ingredient",
-//         dataType: "json",
-//         contentType: "application/json; charset=utf-8",
-//         data : JSON.stringify(data_to_save),
-//         success: function(result){
-//             let curr_ingreds = result["curr_quiz_ingredients"]
-//             ingredients = curr_ingreds
-//             // display_ingredients(ingredients)
-//             console.log(ingredients)
-//         },
-//         error: function(request, status, error){
-//             console.log("Error saving ingredient");
-//             console.log(request)
-//             console.log(status)
-//             console.log(error)
-//         }
-//     })
-// }
-
-
-
-
 document.addEventListener("DOMContentLoaded", function () {
     const characters = [
         "happy_man.png", "happy_woman.png", "mad_man.png", "mad_woman.png",

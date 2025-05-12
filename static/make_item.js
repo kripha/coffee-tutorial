@@ -14,6 +14,7 @@ $(function(){
     });
 })
 
+// Make ingredients draggable and beaker droppable
 function ingredients_draggable(){
     $( ".draggable" ).draggable({
         revert: "invalid"
@@ -38,6 +39,7 @@ function ingredients_draggable(){
     });
 }
 
+// Display ingredient options
 function display_all_ingredients(){
     $("#water-container").html("");
     $("#water-container").append('<div class="draggable" id="water">'
@@ -82,6 +84,7 @@ function addIngredient(ingredient){
     })
 }
 
+// Display the ingredients in beaker
 function display_ingredients(ingredients){
     if(ingredients.length == 0){
         $("#beaker").html("");
@@ -116,8 +119,6 @@ function display_ingredients(ingredients){
         $("#beaker").droppable("disable");
     } 
 }
-
-
 
 function reset_ingredients(){
     $("#beaker").droppable("enable");
@@ -190,6 +191,7 @@ function submit_ingredients(ingredients){
     })
 }
 
+// Get the curr ingredients in beaker
 function get_curr_ingredients(){
     $.ajax({
         type: "GET",

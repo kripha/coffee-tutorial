@@ -9,7 +9,7 @@ $(document).ready(function(){
         // get drink number we are on
         drink_num = parseInt($(location).attr('href').slice(-1))
 
-        // get the id of mc
+        // set correct answer
         if (drink_num < 3) {
             correct = "bitter-button"
         } else {
