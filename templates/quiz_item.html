@@ -111,6 +111,97 @@
   .btn {
     margin: 5px;
   }
+
+
+
+
+  #beaker{
+        width: 300px;
+        height: 350px;
+        border: 3px solid black;
+        border-radius: 20px;
+        margin-top: 10px;
+        display: flex;
+        flex-direction: column-reverse;
+        justify-content: end;
+    }
+    #dropped-espresso{
+        background-color: #a3795bff;
+        height: 50px;
+        border-radius: 20px;
+        color: #f5f5dc;
+        text-align: center;
+    }
+    #dropped-water{
+        background-color: #75cff9;
+        height: 50px;
+        border-radius: 20px;
+        color: white;
+        text-align: center;
+    }
+    #dropped-foamed-milk{
+        background-color: #f5f5dc;
+        height: 50px;
+        border-radius: 20px;
+        color: #a3795bff;
+        text-align: center;
+    }
+    #dropped-small-foamed-milk{
+        background-color: #f5f5dc;
+        height: 30px;
+        border-radius: 20px;
+        color: #a3795bff;
+        text-align: center;
+    }
+    #dropped-steamed-milk{
+        background-color: white;
+        height: 50px;
+        border-radius: 20px;
+        color: black;
+        border: 3px solid black;
+        text-align: center;
+    }
+    #dropped-small-steamed-milk{
+        background-color: white;
+        height: 30px;
+        border-radius: 20px;
+        color: black;
+        border: 3px solid black;
+        text-align: center;
+    }
+    #dropped-milk{
+        background-color: lightblue;
+        height: 50px;
+        border-radius: 20px;
+        color: white;
+        text-align: center;
+    }
+    #dropped-small-milk{
+        background-color: lightblue;
+        height: 30px;
+        border-radius: 20px;
+        color: white;
+        text-align: center;
+    }
+    #submit-button {
+        padding: 10px;
+        width: 175px;
+        height: 60px;
+        margin-top: 10px;
+    }
+    #reset-button {
+        width: 150px;
+        height: 50px;
+        padding: 10px;
+        margin-top: 20px;
+        /* margin-left: 70px; */
+        background-color: #f5f5dc;
+        color: #a3795bff;
+        border: 1px solid#a3795bff;
+    }
+
+
+
 </style>
 
 <h2 id="quiz-title" style="text-align: center;">Coffee Quiz</h2>
@@ -165,11 +256,26 @@
 
   <!-- Right Column: Main cup + buttons -->
   <div class="right-col">
-    <div class="main-cup droppable" id="main-cup">
+    <!-- <div class="main-cup droppable" id="main-cup">
       <p>Drop Here</p>
+    </div> -->
+
+    <!-- KRISTINE CODE -->
+    <p>Drop Here</p>
+    <div id="beaker" class="row droppable">
+
+            
     </div>
+    <button id="submit-button" class="standard-button">Mix</button>
+    <button id="reset-button" class="standard-button">Reset</button>
+
+
+
+
+
+<!-- 
     <button id="dump-button" class="btn btn-secondary">Dump</button>
-    <button id="submit-button" class="btn btn-primary">Submit</button>
+    <button id="submit-button" class="btn btn-primary">Submit</button> -->
   </div>
 
 </div>

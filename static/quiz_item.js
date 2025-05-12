@@ -1,6 +1,34 @@
 let score = 0;
 let characterBase = "";
 
+
+
+// function addIngredient(ingredient){
+//     let data_to_save = {"ingredient": ingredient}
+//     $.ajax({
+//         type: "POST",
+//         url: "save_quiz_ingredient",
+//         dataType: "json",
+//         contentType: "application/json; charset=utf-8",
+//         data : JSON.stringify(data_to_save),
+//         success: function(result){
+//             let curr_ingreds = result["curr_quiz_ingredients"]
+//             ingredients = curr_ingreds
+//             // display_ingredients(ingredients)
+//             console.log(ingredients)
+//         },
+//         error: function(request, status, error){
+//             console.log("Error saving ingredient");
+//             console.log(request)
+//             console.log(status)
+//             console.log(error)
+//         }
+//     })
+// }
+
+
+
+
 document.addEventListener("DOMContentLoaded", function () {
     const characters = [
         "happy_man.png", "happy_woman.png", "mad_man.png", "mad_woman.png",
@@ -167,17 +195,87 @@ $(function () {
             $(this).append(div);
         }
     });
-  
-    $("#dump-button").click(function () {
-        $("#main-cup").empty().append("<p>Drop Here</p>");
+
+
+    $( "#beaker" ).droppable({
+        over: function(event, ui) {
+            $(this).css('background-color', 'lightblue'); 
+        },
+        out: function(event, ui) {
+            $(this).css('background-color', 'white');
+        },
+        drop: function(event, ui) {
+            $(this).css('background-color', 'white');
+            let ingred = ui.draggable.data("ingredient");
+            let displayName = ingred;
+            console.log(ingred)
+
+            // Apply unit logic to all milk types
+            if (ingred === "Milk" || ingred === "Foamed milk" || ingred === "Steamed milk") {
+                const milkUnit = $("#milk-unit").val();
+                displayName = `1 ${milkUnit} ${ingred.toLowerCase()}`;
+            }
+
+            // Add ingredient to beaker
+            if(ingred == "Espresso"){
+                ingred_name = "espresso"
+                displayName = "1 part espresso"
+            }
+            if(ingred == "Water"){
+                ingred_name = "water"
+                displayName = "1 part water"
+            }
+            if(displayName == "1 part foamed milk"){
+                ingred_name = "foamed-milk"
+            }
+            if(displayName == "1 small part foamed milk"){
+                ingred_name = "small-foamed-milk"
+            }
+            if(displayName == "1 part steamed milk"){
+                ingred_name = "steamed-milk"
+            }
+            if(displayName == "1 small part steamed milk"){
+                ingred_name = "small-steamed-milk"
+            }
+            if(displayName == "1 part milk"){
+                ingred_name = "milk"
+            }
+            if(displayName == "1 small part milk"){
+                ingred_name = "small-milk"
+            }
+            $("#beaker").append('<div class="ingred" id="dropped-' + ingred_name + '">' + displayName + '</div>');
+
+            // If dropping frothed or steamed milk, revert tray to plain milk
+            if (ingred === "Foamed milk" || ingred === "Steamed milk") {
+                const newMilkCup = $("<img>")
+                .attr("src", "/static/images/ingredients/milk.png")
+                .attr("data-ingredient", "Milk")
+                .attr("id", "milk-cup")
+                .addClass("ingredient-img draggable");
+        
+                $("#milk-cup").replaceWith(newMilkCup);
+                newMilkCup.draggable({ revert: "invalid", helper: "clone", appendTo: "body" });
+            }
+            //TODO: add max capacity
+        }
+    });
+
+    // $("#dump-button").click(function () {
+    //     $("#main-cup").empty().append("<p>Drop Here</p>");
+        
+    // });
+
+    $("#reset-button").click(function () {
+        $("#beaker").empty();
     });
 
     $("#submit-button").click(function () {
         const userIngredients = [];
       
-        $("#main-cup").children("div").each(function () {
+        $("#beaker").children("div").each(function () {
           userIngredients.push($(this).text().trim());
         });
+        console.log(userIngredients)
       
         const currentPrompt = shuffled[currentIndex];
       
@@ -226,6 +324,7 @@ $(function () {
                     showFeedback(true, () => {
                         currentIndex++;
                         showNextPrompt();
+
                     });
                 } else {
                     tryNextDrink(); // try next possible match
@@ -234,5 +333,71 @@ $(function () {
         }
       
         tryNextDrink();
+        $("#beaker").empty();
     });
+
+
+    // $("#submit-button").click(function () {
+    //     const userIngredients = [];
+      
+    //     $("#main-cup").children("div").each(function () {
+    //       userIngredients.push($(this).text().trim());
+    //     });
+      
+    //     const currentPrompt = shuffled[currentIndex];
+      
+    //     // Determine list of correct drink IDs to validate against
+    //     let validDrinkIds = [];
+      
+    //     if (currentPrompt.type === "specific") {
+    //         validDrinkIds = [currentPrompt.drink.id];
+    //     } else if (currentPrompt.type === "taste_profile") {
+    //         validDrinkIds = allDrinks
+    //         .filter(d => d.taste_profile === currentPrompt.target_profile)
+    //         .map(d => d.id);
+    //     }
+      
+    //     // Helper: try matching userIngredients against multiple drinks
+    //     let validated = false;
+    //     let validationIndex = 0;
+      
+    //     function tryNextDrink() {
+    //         console.log("tryNextDrink is called");
+    //         if (validationIndex >= validDrinkIds.length) {
+    //                 currentPrompt.correct = false;
+    //                 showFeedback(false, () => {
+    //                 currentIndex++;
+    //                 showNextPrompt();
+    //             });
+    //             return;
+    //         }
+        
+    //         const testId = validDrinkIds[validationIndex];
+    //         validationIndex++;
+        
+    //         fetch("/quiz/deliver", {
+    //             method: "POST",
+    //             headers: { "Content-Type": "application/json" },
+    //                 body: JSON.stringify({
+    //                 id: testId,
+    //                 ingredients: userIngredients
+    //             })
+    //         })
+    //         .then(res => res.json())
+    //         .then(data => {
+    //             if (data.res) {
+    //                 score++;
+    //                 currentPrompt.correct = true;
+    //                 showFeedback(true, () => {
+    //                     currentIndex++;
+    //                     showNextPrompt();
+    //                 });
+    //             } else {
+    //                 tryNextDrink(); // try next possible match
+    //             }
+    //         });
+    //     }
+      
+    //     tryNextDrink();
+    // });
 });
