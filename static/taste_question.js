@@ -3,6 +3,8 @@ $(document).ready(function(){
     $('.mc-button').click(function() {
         $("#feedback").empty()
         $("#next-button-col").empty()
+        $('.mc-button').removeClass("highlight")
+        $(this).addClass("highlight")
 
         // get drink number we are on
         drink_num = parseInt($(location).attr('href').slice(-1))
