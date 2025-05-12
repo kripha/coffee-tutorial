@@ -46,7 +46,7 @@ function display_all_ingredients(){
     $("#steamed-milk-container").html("");
     $("#steamed-milk-container").append('<div class="draggable" id="steamed-milk">'
         + '<img id="steamed-milk-img" src="../static/images/ingredients/steamed-milk.png">'
-        + '1 steamed milk</div>');
+        + '1 part steamed milk</div>');
     $("#espresso-container").html("");
     $("#espresso-container").append('<div class="draggable" id="espresso"> <img src="../static/images/ingredients/espresso-shot.png"> 1 part espresso</div>');
     $("#foamed-milk-container").html("");
@@ -105,7 +105,7 @@ function display_ingredients(ingredients){
             if(ingred == "1 small part foamed milk"){
                 ingred_name = "small-foamed-milk"
             }
-            if(ingred == "1 steamed milk"){
+            if(ingred == "1 part steamed milk"){
                 ingred_name = "steamed-milk"
             }
             $("#beaker").append('<div class="ingred" id="dropped-' + ingred_name + '">' + ingred + '</div>');

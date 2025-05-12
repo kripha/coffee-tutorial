@@ -80,7 +80,7 @@ drinks = [
         "price": 12,
         "img": "../static/images/cappuccino.jpg",
         "ingredients": ["1 part espresso", "1 part steamed milk", "1 part foamed milk"],
-        "backend_ingredients": ["1 part espresso", "1 steamed milk", "1 part foamed milk"],
+        "backend_ingredients": ["1 part espresso", "1 part steamed milk", "1 part foamed milk"],
         "ingredients_map" : [
             {
                 "name": "espresso",
@@ -107,7 +107,7 @@ drinks = [
         "price": 8,
         "img": "../static/images/flat_white.jpg",
         "ingredients": ["1 part espresso", "2 parts steamed milk"],
-        "backend_ingredients": ["1 part espresso", "1 steamed milk", "1 steamed milk"],
+        "backend_ingredients": ["1 part espresso", "1 part steamed milk", "1 part steamed milk"],
         "ingredients_map" : [
             {
                 "name": "espresso",
@@ -129,7 +129,7 @@ drinks = [
         "price": 12,
         "img": "../static/images/latte.jpg",
         "ingredients": ["1 part espresso", "2 parts steamed milk", "1 small part foamed milk"],
-        "backend_ingredients": ["1 part espresso", "1 steamed milk", "1 steamed milk", "1 small part foamed milk"],
+        "backend_ingredients": ["1 part espresso", "1 part steamed milk", "1 part steamed milk", "1 small part foamed milk"],
         "ingredients_map" : [
             {
                 "name": "espresso",
@@ -180,7 +180,7 @@ mc_questions = [
 ]
 
 
-all_ingredients = ["1 part espresso", "1 steamed milk",
+all_ingredients = ["1 part espresso", "1 part steamed milk",
                 "1 small part foamed milk", "1 part foamed milk", "1 part water"]
 
 curr_ingredients = []
