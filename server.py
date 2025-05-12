@@ -302,11 +302,6 @@ def deliver():
         count = item["count"]
         unit = item["unit"]
 
-        # if unit == "small part":
-        #     correct_list.extend([f"A {unit} of {name.lower()}"] * count)
-        # else:
-        #     correct_list.extend([name.capitalize()] * count)
-
         if unit == "small part":
             correct_list.extend([f"1 small part {name.lower()}"] * count)
         else:
@@ -318,25 +313,6 @@ def deliver():
     # Compare ingredients using Counter to allow unordered matches
     res = Counter(submitted_ingredients) == Counter(correct_list)
     return jsonify(res=res)
-
-
-
-
-
-# @app.route('/quiz_item/save_quiz_ingredient', methods=['GET', 'POST'])
-# def save_quiz_ingredient():
-#     global all_ingredients
-#     global curr_quiz_ingredients
-
-#     json_data = request.get_json()
-    
-#     new_ingredient = json_data["ingredient"] 
-    
-#     curr_quiz_ingredients.append(new_ingredient)
-#     return jsonify(all_ingredients=all_ingredients, curr_quiz_ingredients=curr_quiz_ingredients)
-
-
-
 
 if __name__ == '__main__':
     app.run(debug = True, port=5001)
