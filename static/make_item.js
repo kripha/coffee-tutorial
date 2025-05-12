@@ -112,17 +112,14 @@ function display_ingredients(ingredients){
         }
     }
     if(ingredients.length >= 6){
-        $("#result-div").html("Too many ingredients. Either reset or mix.");
+        $("#feedback").html("Too many ingredients. Either reset or mix.");
         $("#beaker").droppable("disable");
-    } else{
-        $("#result-div").html("");
-    }
+    } 
 }
 
 
 
 function reset_ingredients(){
-    $("#result-div").html("");
     $("#beaker").droppable("enable");
     $.ajax({
         type: "GET",
@@ -157,7 +154,7 @@ function submit_ingredients(ingredients){
             reset_ingredients();
             let res = result["res"]
             if(res == "Correct"){
-                $("#result-div").html("Correct! Proceed to the next page.<br>");
+                $("#feedback").html("Correct! Proceed to the next page.<br>");
                 var button = $('<button/>', {
                     text: 'Next Page', 
                     id: 'myButton', 
@@ -180,7 +177,7 @@ function submit_ingredients(ingredients){
                   }
             }
             else{
-                $("#result-div").html("Incorrect! Try again!")
+                $("#feedback").html("Incorrect! Try again!")
                 $("#beaker").droppable("enable");
             }
         },
