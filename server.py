@@ -202,6 +202,10 @@ def learn(id):
 def multiple_choice(id):
     return render_template('multiple_choice.html', item = drinks[int(id)], mc_question=mc_questions[int(id)])
 
+@app.route('/taste-question/<id>')
+def taste_question(id):
+    return render_template('taste_question.html', item = drinks[int(id)])
+
 @app.route('/make/<id>')
 def make(id):
     return render_template('make_item.html', all_ingredients = all_ingredients, curr_ingredients = curr_ingredients, all_drinks = drinks, item = drinks[int(id)])

@@ -1,0 +1,119 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<script src="{{ url_for('static', filename='taste_question.js') }}"></script>
+<script>
+    localStorage.setItem("disableRecipes", "false");
+</script>
+<style>
+    #title{
+        text-align: center;
+        background-color: white;
+    }
+    #drinkname{
+        font-size: 36px;
+    }
+    #drink-image{
+        padding-left: 90px;
+    }
+    #drink-info{
+        background-color: white;
+        font-size: 24px;
+        margin: auto;
+    }
+    #info-wrapper{
+        background-color: white;
+        border: dashed;
+    }
+    #next-button{
+        background-color: #a3795bff;
+        color: #f5f5dc;
+        font-size: 20px;
+        border: none;
+        padding-left: 80px;
+        padding-right: 80px;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        border-radius: 20px;
+    }
+    #button-div{
+        padding-top: 20px;
+    }
+    #back-div{
+        padding-top: 20px;
+    }
+    .mc-button{
+        margin-bottom: 20px;
+        width: 300px;
+        height: 100px;
+    }
+    .mc-question{
+        text-align: left;
+        margin-top: 10px;
+        font-size: 36px;
+        width: 900px;
+    }
+    .mc-choices {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        /* border: 1px solid red; */
+        width: 500px;
+    }
+
+</style>
+
+<script>
+    let item = {{item|tojson}}
+</script>
+
+<div class="row">
+    <div class="col-2"></div> <!--padding-->
+    <div class="col-4 mc-question">
+        What is the taste profile of a {{item['name']}}?
+    </div>
+</div>
+
+<div class="row learn-container">
+
+    <div class="col-1"></div> <!--padding-->
+
+    <div class="col-4" id="title">
+        <img id="drink-image" src="{{item['img']}}">
+    </div>
+
+    <div class="col-1"></div> <!--padding-->
+
+    <div class="col-6 mc-choices">
+        <div class="row">
+            <button id="bitter-button" class="standard-button mc-button">Bitter</button>
+        </div>
+        <div class="row">
+            <button id="milky-button" class="standard-button mc-button">Milky</button>
+        </div>
+        
+
+    </div>
+
+</div>
+
+<div class="row">
+    <div class="col-2"></div> <!--padding-->
+    
+    <div class="col-2" id="back-div">
+        <a href="/learn/{{item.id}}"><button id="next-button">Back</button></a>
+    </div>
+
+    <div class="col-4"></div> <!--padding-->
+
+    <div id="feedback" class="col-2">
+    </div>
+
+    <div class="col-2" id="next-button-col">
+        
+    </div>
+
+</div>
+{% endblock %}
