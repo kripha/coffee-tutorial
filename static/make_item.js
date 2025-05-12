@@ -174,7 +174,7 @@ function submit_ingredients(ingredients){
                         }
                     }
                   });
-                  $('#result-div').append(button);
+                  $('#next-div').append(button);
                   if(item["id"] == all_drinks.length - 1){
                     $("#myButton").text("Take Quiz");
                   }
